@@ -59,6 +59,12 @@ my favourite number is  5
 my favourite number is  540
 my favourite number is  456
 ```
+
+**Short variable declarations**
+
+* Inside a function, the := short assignment statement can be used in place of a var declaration with implicit type.
+* Outside a function, every statement begins with a keyword (var, func, and so on) and so the := construct is not available.
+
  
  **Println vs Printf in Golang**
  
@@ -127,6 +133,8 @@ func main() {
 
 * %T :	a Go-syntax representation of the type of the value
 * %t	the word true or false
+* %v	the value in a default format
+* %q	a double-quoted string safely escaped with Go syntax
 * bool:                    %t
 * int, int8 etc.:          %d
 * uint, uint8 etc.:        %d, %#x if printed with %#v
@@ -134,3 +142,81 @@ func main() {
 * string:                  %s
 * chan:                    %p
 * pointer:                 %p
+
+
+**Basic types**
+
+```
+bool
+
+string
+
+int  int8  int16  int32  int64
+uint uint8 uint16 uint32 uint64 uintptr
+
+byte // alias for uint8
+
+rune // alias for int32
+     // represents a Unicode code point
+
+float32 float64
+
+complex64 complex128
+```
+
+**Variables**
+
+* The var statement declares a list of variables; as in function argument lists, the type is last.
+* A var statement can be at package or function level. We see both in this example.
+
+```
+package main
+
+import "fmt"
+
+var c, python, java bool
+
+func main() {
+	var i int
+	fmt.Println(i, c, python, java)
+}
+```
+
+**Variables with initializers**
+
+* A var declaration can include initializers, one per variable.
+* If an initializer is present, the type can be omitted; the variable will take the type of the initializer.
+
+```
+package main
+
+import "fmt"
+
+var i, j int = 1, 2
+
+func main() {
+	var c, python, java = true, false, "no!"
+	fmt.Println(i, j, c, python, java)
+}
+```
+
+**Zero values**
+
+* Variables declared without an explicit initial value are given their zero value.
+* 0 for numeric types, false for the boolean type, and "" (the empty string) for strings.
+
+**Constants**
+
+* Constants are declared like variables, but with the const keyword.
+* Constants can be character, string, boolean, or numeric values.
+* Constants cannot be declared using the := syntax.
+
+**Go >> and << operators**
+
+* << (left shift): Takes two numbers, left shifts the bits of the first operand, the second operand decides the number of places to shift.
+* >> (right shift): Takes two numbers, right shifts the bits of the first operand, the second operand decides the number of places to shift.
+* For example if A=60[0011 1100] and B =13[0000 1101] then,
+  A << 2 will give 240 which is 1111 0000 and A >> 2 will give 15 which is 0000 1111
+
+
+
