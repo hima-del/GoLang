@@ -213,8 +213,8 @@ func main() {
 
 **Go >> and << operators**
 
-* << (left shift): Takes two numbers, left shifts the bits of the first operand, the second operand decides the number of places to shift.
-* >> (right shift): Takes two numbers, right shifts the bits of the first operand, the second operand decides the number of places to shift.
+* `<<` : (left shift): Takes two numbers, left shifts the bits of the first operand, the second operand decides the number of places to shift.
+* `>>` :(right shift): Takes two numbers, right shifts the bits of the first operand, the second operand decides the number of places to shift.
 * For example if A=60[0011 1100] and B =13[0000 1101] then,
   A << 2 will give 240 which is 1111 0000 and A >> 2 will give 15 which is 0000 1111
 
