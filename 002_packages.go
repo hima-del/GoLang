@@ -9,7 +9,7 @@ func main() {
 	fmt.Println("my favourite number is ", rand.Intn(10))
 	fmt.Println("my favourite number is ", rand.Intn(10))
 	fmt.Println("my favourite number is ", rand.Intn(10))
-	fmt.Println("my next favourite is ", rand.Intn(100))
+	fmt.Println("my favourite number is ", rand.Intn(100))
 	fmt.Println("my favourite number is ", rand.Intn(100))
 	fmt.Println("my favourite number is ", rand.Intn(100))
 	fmt.Println("my favourite number is ", rand.Intn(10))
