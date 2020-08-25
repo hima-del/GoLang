@@ -218,5 +218,131 @@ func main() {
 * For example if A=60[0011 1100] and B =13[0000 1101] then,
   A << 2 will give 240 which is 1111 0000 and A >> 2 will give 15 which is 0000 1111
 
+**Functions**
 
+**What is a function?**
 
+* A function is a block of code that performs a specific task. 
+* A function takes a input, performs some calculations on the input and generates a output.
+
+**Function declaration**
+
+* The general syntax for declaring a function in go is
+
+```
+func functionname(parametername type) returntype {  
+ //function body
+}
+```
+
+* The function declaration starts with a func keyword followed by the functionname. 
+* The parameters are specified between `(` and `)` followed by the returntype of the function. 
+* The syntax for specifying a parameter is `parameter name` followed by the `type`. 
+* Any number of parameters can be specified like `(parameter1 type, parameter2 type)`. 
+* Then there is a block of code between `{` and `}` which is the body of the function.
+* The parameters and return type are optional in a function.
+* Hence the following syntax is also a valid function declaration.
+
+```
+func functionname() {  
+}
+```
+
+**Sample function**
+
+```
+package main
+
+import "fmt"
+
+func add(x int, y int) int {
+	return x + y
+}
+
+func main() {
+	fmt.Println(add(42, 13))
+}
+```
+
+* If consecutive parameters are of the same type, we can avoid writing the type each time and it is enough to be written once at the end
+
+```
+package main
+
+import "fmt"
+
+func add(x, y int) int {
+	return x + y
+}
+
+func main() {
+	fmt.Println(add(42, 13))
+}
+```
+
+**Multiple return values**
+
+* It is possible to return multiple values from a function
+* If a function returns multiple return values then they must be specified between `(` and `)`
+
+```
+package main
+
+import "fmt"
+
+func swap(x, y string) (string, string) {
+	return y, x
+}
+
+func main() {
+	a, b := swap("hello", "world")
+	fmt.Println(a, b)
+}
+```
+
+**Named return values**
+
+* It is possible to return named values from a function. 
+* If a return value is named, it can be considered as being declared as a variable in the first line of the function.
+
+```
+package main
+
+import "fmt"
+
+func split(sum int) (x, y int) {
+	x = sum * 4 / 9
+	y = sum - x
+	return
+}
+
+func main() {
+	fmt.Println(split(17))
+}
+```
+
+* Note that the return statement in the function does not explicitly return any value
+* x and y are specified in the function declaration as return values, they are automatically returned from the function when a return statement in encountered.
+
+**Blank Identifier**
+
+* _ is know as the blank identifier in Go.
+* It can be used in place of any value of any type.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func rectProps(length, width float64) (float64, float64) {  
+    var area = length * width
+    var perimeter = (length + width) * 2
+    return area, perimeter
+}
+func main() {  
+    area, _ := rectProps(10.8, 5.6) // perimeter is discarded
+    fmt.Printf("Area %f ", area)
+}
+```
