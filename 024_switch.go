@@ -16,5 +16,7 @@ func main() {
 		fmt.Println("ring")
 	case 5:
 		fmt.Println("small")
+	default:
+		fmt.Println("icorrect finger number")
 	}
 }
