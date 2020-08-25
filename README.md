@@ -657,8 +657,131 @@ func main() {
 
 * In the above program `num` is -5. 
 * When the control reaches the `if` statement in line no. 10, the condition is satisfied since `num < 0`. 
-* The `break` statement terminates the `switch` before it completes and the program doesn't print anything :).
+* The `break` statement terminates the `switch` before it completes and the program doesn't print anything
 
+**Arrays**
+
+* An array is a collection of elements that belong to the same type. 
+* For example the collection of integers 5, 8, 9, 79, 76 form an array.
+* Mixing values of different types, for example an array that contains both strings and integers is not allowed in Go.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+
+func main() {  
+    var a [3]int //int array with length 3
+    fmt.Println(a)
+}
+```
+
+* `var a [3]int` declares a integer array of length 3.
+* All elements in an array are automatically assigned the zero value of the array type.
+* In this case a is an integer array and hence all elements of a are assigned to 0, the zero value of `int`. 
+* Running the above program will output `[0 0 0]`.
+* The index of an array starts from 0 and ends at length - 1.
+
+
+**short hand declaration for array**
+
+```
+package main 
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    a := [3]int{12, 78, 50} // short hand declaration to create array
+    fmt.Println(a)
+}
+```
+
+* You can even ignore the length of the array in the declaration and replace it with `...` and let the compiler find the length for you
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    a := [...]int{12, 78, 50} // ... makes the compiler determine the length
+    fmt.Println(a)
+}
+````
+
+* The size of the array is a part of the type. 
+* Hence [5]int and [25]int are distinct types. 
+* Because of this, arrays cannot be resized
+
+**Arrays are value types**
+
+* Arrays in Go are value types and not reference types. 
+* This means that when they are assigned to a new variable, a copy of the original array is assigned to the new variable.
+* If changes are made to the new variable, it will not be reflected in the original array.
+
+```
+package main
+
+import "fmt"
+
+func main() {  
+    a := [...]string{"USA", "China", "India", "Germany", "France"}
+    b := a // a copy of a is assigned to b
+    b[0] = "Singapore"
+    fmt.Println("a is ", a)
+    fmt.Println("b is ", b) 
+}
+//output
+a is [USA China India Germany France]  
+b is [Singapore China India Germany France]  
+```
+
+* Similarly when arrays are passed to functions as parameters, they are passed by value and the original array in unchanged.
+
+```
+package main
+
+import "fmt"
+
+func changeLocal(num [5]int) {  
+    num[0] = 55
+    fmt.Println("inside function ", num)
+
+}
+func main() {  
+    num := [...]int{5, 6, 7, 8, 8}
+    fmt.Println("before passing to function ", num)
+    changeLocal(num) //num is passed by value
+    fmt.Println("after passing to function ", num)
+}
+//output
+before passing to function  [5 6 7 8 8]  
+inside function  [55 6 7 8 8]  
+after passing to function  [5 6 7 8 8]  
+```
+
+**Length of an array**
+
+* The length of the array is found by passing the array as parameter to the len function.
+
+```
+package main
+
+import "fmt"
+
+func main() {  
+    a := [...]float64{67.7, 89.8, 21, 78}
+    fmt.Println("length of a is",len(a))
+
+}
+```
 
 
 
