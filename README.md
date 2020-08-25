@@ -146,22 +146,63 @@ func main() {
 
 **Basic types**
 
+**Numbers**
+
+**Integers**
+
+**Unsigned integers[no negatives]**
+
 ```
-bool
+1. uint8[unsigned integer with 8 bits]/byte (0-255)
+2. uint16 (0-65535)
+3. uint32 (0-4294967295)
+4. uint64 (0-18446744073709551615)
+```
 
-string
+**Signed integers**
 
-int  int8  int16  int32  int64
-uint uint8 uint16 uint32 uint64 uintptr
+```
+1. int8 (-128-127)
+2. int16 (-32768-32767)
+3. int32/rune (-21477483648 to 2147483647)
+4. int64 (-9223372036854775808 to 9223372036854775807)
+```
 
-byte // alias for uint8
+**3 Machine dependent types**
 
-rune // alias for int32
-     // represents a Unicode code point
+```
+1. uint (32 or 64 bits)
+2. int (same as unit)
+3. unitptr
+```
 
-float32 float64
+**Floating point numbers**
 
-complex64 complex128
+**Floats**
+
+```
+1. float32
+2. float64
+```
+
+**Complex (Imaginary Parts)
+
+```
+1. complex64
+2. complex128
+```
+
+**Strings**
+
+```
+* "hello world"
+```
+
+**Booleans**
+
+```
+1. true
+2. false
 ```
 
 **Variables**
