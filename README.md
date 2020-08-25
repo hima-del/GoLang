@@ -185,7 +185,7 @@ func main() {
 2. float64
 ```
 
-**Complex (Imaginary Parts)
+**Complex (Imaginary Parts)**
 
 ```
 1. complex64
@@ -387,3 +387,314 @@ func main() {
     fmt.Printf("Area %f ", area)
 }
 ```
+
+**Loops**
+
+* A loop statement is used to execute a block of code repeatedly.
+* for is the only loop available in Go.
+* Go doesn't have while or do while loops 
+
+**for loop syntax**
+
+```
+for initialisation; condition; post {  
+}
+```
+
+* All the three components namely initialisation, condition and post are optional in Go. 
+* The initialisation statement will be executed only once.
+* After the loop is initialised, the condition will be checked. 
+* If the condition evaluates to true, the body of loop inside the { } will be executed followed by the post statement. 
+* The post statement will be executed after each successful iteration of the loop.
+* After the post statement is executed, the condition will be rechecked. 
+* If it's true, the loop will continue executing, else the for loop terminates.
+* The variables declared in a for loop are only available within the scope of the loop. Hence i cannot be accessed outside the body for loop.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    for i := 1; i <= 10; i++ {
+        fmt.Printf(" %d",i)
+    }
+}
+```
+
+**break**
+
+* The break statement is used to terminate the for loop abruptly before it finishes its normal execution and move the control to the line of code just after the for loop.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    for i := 1; i <= 10; i++ {
+        if i > 5 {
+            break //loop is terminated if i > 5
+        }
+        fmt.Printf("%d ", i)
+    }
+    fmt.Printf("\nline after for loop")
+}
+```
+
+**continue**
+
+* The continue statement is used to skip the current iteration of the for loop.
+* All code present in a for loop after the continue statement will not be executed for the current iteration. 
+* The loop will move on to the next iteration.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    for i := 1; i <= 10; i++ {
+        if i%2 == 0 {
+            continue
+        }
+        fmt.Printf("%d ", i)
+    }
+}
+```
+
+
+**switch statement**
+
+* A switch is a conditional statement that evaluates an expression and compares it against a list of possible matches and executes the corresponding block of code.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    finger := 4
+    fmt.Printf("Finger %d is ", finger)
+    switch finger {
+    case 1:
+        fmt.Println("Thumb")
+    case 2:
+        fmt.Println("Index")
+    case 3:
+        fmt.Println("Middle")
+    case 4:
+        fmt.Println("Ring")
+    case 5:
+        fmt.Println("Pinky")
+
+    }
+}
+```
+
+* In the above program `switch finger` in line no. 10, compares the value of `finger` with each of the `case` statements. 
+* The cases are evaluated from top to bottom and the first `case` which matches the expression is executed.
+* In this case, `finger` has a value of 4 and hence
+
+**multiple expressions case**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    letter := "i"
+    fmt.Printf("Letter %s is a ", letter)
+    switch letter {
+    case "a", "e", "i", "o", "u": //multiple expressions in case
+        fmt.Println("vowel")
+    default:
+        fmt.Println("not a vowel")
+    }
+}
+```
+
+**expressionless switch**
+
+* The expression in a switch is optional and it can be omitted.
+* If the expression is omitted, the switch is considered to be switch true and each of the case expression is evaluated for truth and the corresponding block of code is           executed.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    num := 75
+    switch { // expression is omitted
+    case num >= 0 && num <= 50:
+        fmt.Printf("%d is greater than 0 and less than 50", num)
+    case num >= 51 && num <= 100:
+        fmt.Printf("%d is greater than 51 and less than 100", num)
+    case num >= 101:
+        fmt.Printf("%d is greater than 100", num)
+    }
+
+}
+```
+
+**fallthrough**
+
+* In Go, the control comes out of the switch statement immediately after a case is executed. 
+* A fallthrough statement is used to transfer control to the first statement of the case that is present immediately after the case which has been executed.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func number() int {  
+        num := 15 * 5 
+        return num
+}
+
+func main() {
+
+    switch num := number(); { //num is not a constant
+    case num < 50:
+        fmt.Printf("%d is lesser than 50\n", num)
+        fallthrough
+    case num < 100:
+        fmt.Printf("%d is lesser than 100\n", num)
+        fallthrough
+    case num < 200:
+        fmt.Printf("%d is lesser than 200", num)
+    }
+
+}
+//output
+75 is lesser than 100  
+75 is lesser than 200  
+```
+
+* Switch and case expressions need not be only constants. 
+* They can be evaluated at runtime too.
+* In the program above `num` is initialized to the return value of the function `number()` in line no. 14.
+* The control comes inside the switch and the cases are evaluated. 
+* `case num < 100:` in line no. 18 is true and the program prints 75 is lesser than 100.
+* The next statement is `fallthrough`.
+* When `fallthrough` is encountered the control moves to the first statement of the next case and also prints 75 is lesser than 200.
+
+**Fallthrough happens even when the case evaluates to false**
+
+* Fallthrough will happen even when the case evaluates to false.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    switch num := 25; { 
+    case num < 50:
+        fmt.Printf("%d is lesser than 50\n", num)
+        fallthrough
+    case num > 100:
+        fmt.Printf("%d is greater than 100\n", num)     
+    }
+
+}
+//output
+25 is lesser than 50  
+25 is greater than 100  
+```
+
+* So be sure that you understand what you are doing when using fallthrough.
+
+**fallthrough should be the last statement in a case. If it is present somewhere in the middle, the compiler will complain that `fallthrough statement out of place`.**
+**One more thing is fallthrough cannot be used in the last case of a switch since there are no more cases to fallthrough. If fallthrough is present in the last case, it will       result in the following compilation error.`cannot fallthrough final case in switch`** 
+
+**Breaking switch**
+
+* The break statement can be used to terminate a switch early before it completes.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    switch num := -5; {
+    case num < 50:
+        if num < 0 {
+            break
+        }
+        fmt.Printf("%d is lesser than 50\n", num)
+        fallthrough
+    case num < 100:
+        fmt.Printf("%d is lesser than 100\n", num)
+        fallthrough
+    case num < 200:
+        fmt.Printf("%d is lesser than 200", num)
+    }
+
+}
+```
+
+* In the above program `num` is -5. 
+* When the control reaches the `if` statement in line no. 10, the condition is satisfied since `num < 0`. 
+* The `break` statement terminates the `switch` before it completes and the program doesn't print anything :).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
