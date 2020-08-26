@@ -993,9 +993,177 @@ array after modification to slice nums2 [100 101 80]
 
 * From the output it's clear that **when slices share the same array, the modifications which each one makes are reflected in the array**.
 
+**length and capacity of a slice**
 
+* The length of the slice is the **number of elements in the slice**.
+* The capacity of the slice is the **number of elements in the underlying array starting from the index from which the slice is created**.
 
+```
+package main
 
+import (  
+    "fmt"
+)
+
+func main() {  
+    fruitarray := [...]string{"apple", "orange", "grape", "mango", "water melon", "pine apple", "chikoo"}
+    fruitslice := fruitarray[1:3]
+    fmt.Printf("length of slice %d capacity %d", len(fruitslice), cap(fruitslice)) //length of fruitslice is 2 and capacity is 6
+}
+```
+
+* A slice can be re-sliced upto its capacity. 
+* Anything beyond that will cause the program to throw a run time error.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    fruitarray := [...]string{"apple", "orange", "grape", "mango", "water melon", "pine apple", "chikoo"}
+    fruitslice := fruitarray[1:3]
+    fmt.Printf("length of slice %d capacity %d\n", len(fruitslice), cap(fruitslice)) //length of is 2 and capacity is 6
+    fruitslice = fruitslice[:cap(fruitslice)] //re-slicing furitslice till its capacity
+    fmt.Println("After re-slicing length is",len(fruitslice), "and capacity is",cap(fruitslice))
+}
+//output
+length of slice 2 capacity 6  
+After re-slicing length is 6 and capacity is 6 
+```
+
+**creating a slice using make**
+
+* `func make([]T, len, cap) []T` can be used to create a slice by passing the type, length and capacity. 
+* The capacity parameter is optional and defaults to the length. 
+* The make function creates an array and returns a slice reference to it.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    i := make([]int, 5, 5)
+    fmt.Println(i)
+}
+//output
+[0 0 0 0 0]
+```
+
+**Appending to a slice**
+
+* As we already know arrays are restricted to fixed length and their length cannot be increased. 
+* Slices are dynamic and new elements can be appended to the slice using append function.
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	a := []int{1, 2, 3, 4, 5, 6}
+	fmt.Printf("length is %d and capacity is %d\n", len(a), cap(a))
+	a = append(a, 7)
+	fmt.Printf("length is %d and capacity is %d\n", len(a), cap(a))
+	a = append(a, 8)
+	fmt.Printf("length is %d and capacity is %d\n", len(a), cap(a))
+	a = append(a, 8)
+	fmt.Printf("length is %d and capacity is %d\n", len(a), cap(a))
+	a = append(a, 10)
+	fmt.Printf("length is %d and capacity is %d\n", len(a), cap(a))
+	a = append(a, 11)
+	fmt.Printf("length is %d and capacity is %d\n", len(a), cap(a))
+	a = append(a, 12)
+	fmt.Printf("length is %d and capacity is %d\n", len(a), cap(a))
+	a = append(a, 13)
+	fmt.Printf("length is %d and capacity is %d\n", len(a), cap(a))
+}
+
+//output
+length is 6 and capacity is 6
+length is 7 and capacity is 12
+length is 8 and capacity is 12
+length is 9 and capacity is 12
+length is 10 and capacity is 12
+length is 11 and capacity is 12
+length is 12 and capacity is 12
+length is 13 and capacity is 24
+```
+
+**Passing a slice to a function**
+
+* Slices can be thought of as being represented internally by a structure type.
+
+```
+type slice struct {  
+    Length        int
+    Capacity      int
+    ZerothElement *byte
+}
+```
+
+* A slice contains the length, capacity and a pointer to the zeroth element of the array. 
+* When a slice is passed to a function, even though it's passed by value, the pointer variable will refer to the same underlying array.
+* Hence when a slice is passed to a function as parameter, changes made inside the function are visible outside the function too.
+
+```
+package main
+
+import "fmt"
+
+func changeval(a []int) {
+	for i := range a {
+		a[i]++
+	}
+}
+
+func main() {
+	b := []int{1, 2, 3, 4, 5}
+	fmt.Printf("before function call is %d\n", b)
+	changeval(b)
+	fmt.Printf("after function call is %d", b)
+}
+//output
+before function call is [1 2 3 4 5]
+after function call is [2 3 4 5 6]
+```
+
+**multidimensional slices**
+
+```
+package main
+
+import "fmt"
+
+func printslice(a [][]string) {
+	for _, v1 := range a {
+		for _, v2 := range v1 {
+			fmt.Printf("%s", v2)
+		}
+		fmt.Printf("\n")
+	}
+}
+
+func main() {
+	b := [][]string{
+		{"cat", "dog"},
+		{"rat", "cow"},
+		{"lion", "tiger"},
+		{"pig", "fox"},
+	}
+	printslice(b)
+}
+//output
+cat dog
+rat cow
+lion tiger
+pig fox
+```
 
 
 
