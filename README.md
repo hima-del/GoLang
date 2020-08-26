@@ -1218,11 +1218,228 @@ func main() {
 }
 ```
 
+**What is a map?**
 
+* A map is a builtin type in Go that is used to store key-value pairs.
 
+**How to create a map?**
 
+* A map can be created by passing the type of key and value to the make function. 
 
+```
+make(map[type of key]type of value)  
+```
 
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    employeeSalary := make(map[string]int)
+    fmt.Println(employeeSalary)
+}
+//output
+map[]  
+```
+
+* The program above creates a `map` named employeeSalary with `string` `key` and `int` `value`.
+
+**Adding items to a map**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    employeeSalary := make(map[string]int)
+    employeeSalary["steve"] = 12000
+    employeeSalary["jamie"] = 15000
+    employeeSalary["mike"] = 9000
+    fmt.Println("employeeSalary map contents:", employeeSalary)
+}
+//output
+employeeSalary map contents: map[steve:12000 jamie:15000 mike:9000] 
+```
+
+**Retrieving value for a key from a map**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    employeeSalary := map[string]int{
+        "steve": 12000,
+        "jamie": 15000,
+        "mike": 9000,
+    }
+    employee := "jamie"
+    salary := employeeSalary[employee]
+    fmt.Println("Salary of", employee, "is", salary)
+}
+//output
+Salary of jamie is 15000  
+```
+
+* What will happen if an element is not present? The map will return the zero value of the type of that element
+
+**Checking if a key exists**
+
+* In the above section we learned that when a key is not present, the zero value of the type will be returned. 
+* This doesn't help when we want to find out whether the key actually exists in the map.
+
+```
+value, ok := map[key]  
+```
+* The above is the syntax to find out whether a particular key is present in a map. 
+* If ok is true, then the key is present and its value is present in the variable value, else the key is absent.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    employeeSalary := map[string]int{
+        "steve": 12000,
+        "jamie": 15000,
+    }
+    newEmp := "joe"
+    value, ok := employeeSalary[newEmp]
+    if ok == true {
+        fmt.Println("Salary of", newEmp, "is", value)
+        return
+    }
+    fmt.Println(newEmp, "not found")
+
+}
+//output
+joe not found  
+```
+
+**Iterate over all elements in a map**
+
+* The range form of the for loop is used to iterate over all elements of a map.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    employeeSalary := map[string]int{
+        "steve": 12000,
+        "jamie": 15000,
+        "mike":  9000,
+    }
+    fmt.Println("Contents of the map")
+    for key, value := range employeeSalary {
+        fmt.Printf("employeeSalary[%s] = %d\n", key, value)
+    }
+
+}
+//output
+Contents of the map  
+employeeSalary[mike] = 9000  
+employeeSalary[steve] = 12000  
+employeeSalary[jamie] = 15000  
+```
+
+* One important fact is that the order of the retrieval of values from a map when using for range is not guaranteed to be the same for each execution of the program.
+* It is also not the same as the order in which the elements were added to the map
+
+**Deleting items from a map**
+
+* `delete(map, key)` is the syntax to delete key from a map. 
+* The delete function does not return any value.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    employeeSalary := map[string]int{
+        "steve": 12000,
+        "jamie": 15000,     
+        "mike": 9000,
+    }
+    fmt.Println("map before deletion", employeeSalary)
+    delete(employeeSalary, "steve")
+    fmt.Println("map after deletion", employeeSalary)
+
+}
+```
+
+**Length of the map**
+
+* Length of the map can be determined using the len function.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    employeeSalary := map[string]int{
+        "steve": 12000,
+        "jamie": 15000,
+    }
+    fmt.Println("length is", len(employeeSalary))
+
+}
+
+//output
+length is 2 
+```
+
+**Maps are reference types**
+
+* Similar to slices, maps are reference types. 
+* When a map is assigned to a new variable, they both point to the same internal data structure. 
+* Hence changes made in one will reflect in the other.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    employeeSalary := map[string]int{
+        "steve": 12000,
+        "jamie": 15000,     
+        "mike": 9000,
+    }
+    fmt.Println("Original employee salary", employeeSalary)
+    modified := employeeSalary
+    modified["mike"] = 18000
+    fmt.Println("Employee salary changed", employeeSalary)
+
+}
+//output
+
+Original employee salary map[jamie:15000 mike:9000 steve:12000]  
+Employee salary changed map[jamie:15000 mike:18000 steve:12000]  
+```
 
 
 
