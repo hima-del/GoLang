@@ -144,6 +144,23 @@ func main() {
 * pointer:                 %p
 
 
+* %f     default width, default precision
+* %9f    width 9, default precision
+* %.2f   default width, precision 2
+* %9.2f  width 9, precision 2
+* %9.f   width 9, precision 0
+
+* width is the minimum number of runes to output, padding the formatted form with spaces if necessary.
+* For strings, byte slices and byte arrays, however, precision limits the length of the input to be formatted (not the size of the output), truncating if necessary
+
+```
+fmt.Printf("|%6d|%6d|\n", 12, 345)
+fmt.Printf("|%6.2f|%6.2f|\n", 1.2, 3.45)
+```
+
+* Given 12.345 the format %6.3f prints 12.345 while %.3g prints 12.3.
+
+
 **Basic types**
 
 **Numbers**
@@ -783,12 +800,198 @@ func main() {
 }
 ```
 
+**Iterating arrays using range**
 
+* The `for` loop can be used to iterate over elements of an array.
 
+```
+package main
 
+import "fmt"
 
+func main() {  
+    a := [...]float64{67.7, 89.8, 21, 78}
+    for i := 0; i < len(a); i++ { //looping from 0 to the length of the array
+        fmt.Printf("%d th element of a is %.2f\n", i, a[i])
+    }
+}
+```
 
+* Go provides a better and concise way to iterate over an array by using the `range` form of the `for` loop. 
+* `range` returns both the **index and the value at that index.**
 
+```
+package main
+
+import "fmt"
+
+func main() {  
+    a := [...]float64{67.7, 89.8, 21, 78}
+    sum := float64(0)
+    for i, v := range a {//range returns both the index and value
+        fmt.Printf("%d the element of a is %.2f\n", i, v)
+        sum += v
+    }
+    fmt.Println("\nsum of all elements of a",sum)
+}
+//output
+0 the element of a is 67.70  
+1 the element of a is 89.80  
+2 the element of a is 21.00  
+3 the element of a is 78.00
+
+sum of all elements of a 256.5  
+```
+
+* line no. 8 for i, v := range a of the above program is the range form of the for loop. 
+* It will return both the index and the value at that index
+* In case you want only the value and want to ignore the index, you can do this by replacing the index with the` _ `blank identifier.
+
+```
+for _, v := range a { //ignores index  
+}
+```
+
+* The above for loop ignores the index. 
+* Similarly the value can also be ignored.
+
+**Multidimensional arrays**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func printarray(a [3][2]string) {  
+    for _, v1 := range a {
+        for _, v2 := range v1 {
+            fmt.Printf("%s ", v2)
+        }
+        fmt.Printf("\n")
+    }
+}
+
+func main() {  
+    a := [3][2]string{
+        {"lion", "tiger"},
+        {"cat", "dog"},
+        {"pigeon", "peacock"}, //this comma is necessary. The compiler will complain if you omit this comma
+    }
+    printarray(a)
+    var b [3][2]string
+    b[0][0] = "apple"
+    b[0][1] = "samsung"
+    b[1][0] = "microsoft"
+    b[1][1] = "google"
+    b[2][0] = "AT&T"
+    b[2][1] = "T-Mobile"
+    fmt.Printf("\n")
+    printarray(b)
+//output
+lion tiger  
+cat dog  
+pigeon peacock 
+
+apple samsung  
+microsoft google  
+AT&T T-Mobile  
+```
+
+* Although arrays seem to be flexible enough, they come with the restriction that they are of fixed length. 
+* It is not possible to increase the length of an array. 
+* This is were slices come into picture. 
+* In fact in Go, slices are more common than conventional arrays.
+
+**slices**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    a := [5]int{76, 77, 78, 79, 80}
+    var b []int = a[1:4] //creates a slice from a[1] to a[3]
+    fmt.Println(b)
+}
+```
+
+* The syntax `a[start:end]` creates a slice from array `a` starting from index `start` to index `end - 1`.
+* So in line no. 9 of the above program `a[1:4]` creates a `slice` representation of the array a starting from indexes 1 through 3. 
+* Hence the slice b has values `[77 78 79].
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    c := []int{6, 7, 8} //creates and array and returns a slice reference
+    fmt.Println(c)
+}
+```
+
+* In the above program in line no. 9, `c := []int{6, 7, 8}` creates an array with 3 integers and returns a slice reference which is stored in c.
+
+**modifying a slice**
+
+* A slice does not own any data of its own. 
+* It is just a representation of the underlying array. 
+* Any modifications done to the slice will be reflected in the underlying array.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    darr := [...]int{57, 89, 90, 82, 100, 78, 67, 69, 59}
+    dslice := darr[2:5]
+    fmt.Println("array before",darr)
+    for i := range dslice {
+        dslice[i]++
+    }
+    fmt.Println("array after",darr) 
+}
+//output
+array before [57 89 90 82 100 78 67 69 59]  
+array after [57 89 91 83 101 78 67 69 59]  
+```
+
+* When a number of slices share the same underlying array, the changes that each one makes will be reflected in the array.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    numa := [3]int{78, 79 ,80}
+    nums1 := numa[:] //creates a slice which contains all elements of the array
+    nums2 := numa[:]
+    fmt.Println("array before change 1",numa)
+    nums1[0] = 100
+    fmt.Println("array after modification to slice nums1", numa)
+    nums2[1] = 101
+    fmt.Println("array after modification to slice nums2", numa)
+}
+//output
+array before change 1 [78 79 80]  
+array after modification to slice nums1 [100 79 80]  
+array after modification to slice nums2 [100 101 80]  
+```
+
+* From the output it's clear that **when slices share the same array, the modifications which each one makes are reflected in the array**.
 
 
 
