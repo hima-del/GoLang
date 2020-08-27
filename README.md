@@ -1733,6 +1733,24 @@ func main() {
 
 **In Go, '⌘' represents a single character (called a Rune), whereas "⌘" represents a string containing the character ⌘.**
 
+**Double quotes**
+
+* It is used to define a string.
+* A string defined within double quotes will honor escaping characters.
+* For, eg for when printing a string having `\n` there will be a new line printed. Similarly, `\t` will have tab printed.
+
+**Back Quotes**
+
+* It is also used to define a string. 
+* A string encoded in back quotes is a raw literal string and doesn’t honor any kind of escaping.
+
+**Single quotes**
+
+* To declare either a byte or a rune we use single quotes.
+* While declaring byte we have to specify the type. 
+* If we don’t specify the type, then the default type is meant as a rune.
+* A single quote will allow only one character.
+
 
 
 
