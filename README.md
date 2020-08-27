@@ -134,7 +134,6 @@ func main() {
 * %T :	a Go-syntax representation of the type of the value
 * %t	the word true or false
 * %v	the value in a default format
-* %q	a double-quoted string safely escaped with Go syntax
 * bool:                    %t
 * int, int8 etc.:          %d
 * uint, uint8 etc.:        %d, %#x if printed with %#v
@@ -142,6 +141,14 @@ func main() {
 * string:                  %s
 * chan:                    %p
 * pointer:                 %p
+
+
+**String and slice of bytes (treated equivalently with these verbs):**
+
+* %s	the uninterpreted bytes of the string or slice
+* %q	a double-quoted string safely escaped with Go syntax
+* %x	base 16, lower-case, two characters per byte
+* %X	base 16, upper-case, two characters per byte
 
 
 * %f     default width, default precision
@@ -1441,9 +1448,290 @@ Original employee salary map[jamie:15000 mike:9000 steve:12000]
 Employee salary changed map[jamie:15000 mike:18000 steve:12000]  
 ```
 
+**What is a String?**
 
+* A string is a slice of bytes in Go. 
+* Strings can be created by enclosing a set of characters inside double quotes `" "`.
 
+**Accessing individual bytes of a string**
 
+* Since a string is a slice of bytes, it's possible to access each byte of a string.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func printBytes(s string) {  
+    fmt.Printf("Bytes: ")
+    for i := 0; i < len(s); i++ {
+        fmt.Printf("%x ", s[i])
+    }
+}
+
+func main() {  
+    name := "Hello World"
+    fmt.Printf("String: %s\n", name)
+    printBytes(name)
+}
+//output
+String: Hello World  
+Bytes: 48 65 6c 6c 6f 20 57 6f 72 6c 64  
+```
+
+* %s is the format specifier to print a string. 
+* In line no. 16, the input string is printed. 
+* In line no. 9 of the program above, `len(s)` returns the number of bytes in the string and we use a for loop to print those bytes in hexadecimal notation.
+* %x is the format specifier for hexadecimal. 
+
+**Rune**
+
+* A rune is a builtin type in Go and it's the alias of int32. 
+* Rune represents a Unicode code point in Go. 
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func printBytes(s string) {  
+    fmt.Printf("Bytes: ")
+    for i := 0; i < len(s); i++ {
+        fmt.Printf("%x ", s[i])
+    }
+}
+
+func printChars(s string) {  
+    fmt.Printf("Characters: ")
+    runes := []rune(s)
+    for i := 0; i < len(runes); i++ {
+        fmt.Printf("%c ", runes[i])
+    }
+}
+
+func main() {  
+    name := "Hello World"
+    fmt.Printf("String: %s\n", name)
+    printChars(name)
+    fmt.Printf("\n")
+    printBytes(name)
+    fmt.Printf("\n\n")
+    name = "Señor"
+    fmt.Printf("String: %s\n", name)
+    printChars(name)
+    fmt.Printf("\n")
+    printBytes(name)
+}
+//output
+String: Hello World  
+Characters: H e l l o   W o r l d  
+Bytes: 48 65 6c 6c 6f 20 57 6f 72 6c 64 
+
+String: Señor  
+Characters: S e ñ o r  
+Bytes: 53 65 c3 b1 6f 72  
+```
+
+**Accessing individual runes using for range loop**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func charsAndBytePosition(s string) {  
+    for index, rune := range s {
+        fmt.Printf("%c starts at byte %d\n", rune, index)
+    }
+}
+
+func main() {  
+    name := "Señor"
+    charsAndBytePosition(name)
+}
+//output
+S starts at byte 0  
+e starts at byte 1  
+ñ starts at byte 2
+o starts at byte 4  
+r starts at byte 5 
+```
+
+**Creating a string from a slice of bytes**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    byteSlice := []byte{0x43, 0x61, 0x66, 0xC3, 0xA9}
+    str := string(byteSlice)
+    fmt.Println(str)
+}
+
+//output
+Café 
+```
+
+**Creating a string from a slice of runes**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    runeSlice := []rune{0x0053, 0x0065, 0x00f1, 0x006f, 0x0072}
+    str := string(runeSlice)
+    fmt.Println(str)
+}
+//output
+Señor 
+```
+
+**String length**
+
+* The `RuneCountInString(s string) (n int)` function of the utf8 package can be used to find the length of the string. 
+* This method takes a string as an argument and returns the number of runes in it.
+* `len(s)` is used to find the number of bytes in the string and it doesn't return the string length. 
+* Some Unicode characters have code points that occupy more than 1 byte.
+* Using `len` to find out the length of those strings will return the incorrect string length.
+
+```
+package main
+
+import (  
+    "fmt"
+    "unicode/utf8"
+)
+
+func main() {  
+    word1 := "Señor"
+    fmt.Printf("String: %s\n", word1)
+    fmt.Printf("Length: %d\n", utf8.RuneCountInString(word1))
+    fmt.Printf("Number of bytes: %d\n", len(word1))
+
+    fmt.Printf("\n")
+    word2 := "Pets"
+    fmt.Printf("String: %s\n", word2)
+    fmt.Printf("Length: %d\n", utf8.RuneCountInString(word2))
+    fmt.Printf("Number of bytes: %d\n", len(word2))
+}
+
+//output
+
+String: Señor  
+Length: 5  
+Number of bytes: 6
+
+String: Pets  
+Length: 4  
+Number of bytes: 4  
+```
+
+**String comparison**
+
+* The `==` operator is used to compare two strings for equality.
+* If both the strings are equal, then the result is `true` else it's `false`.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func compareStrings(str1 string, str2 string) {  
+    if str1 == str2 {
+        fmt.Printf("%s and %s are equal\n", str1, str2)
+        return
+    }
+    fmt.Printf("%s and %s are not equal\n", str1, str2)
+}
+
+func main() {  
+    string1 := "Go"
+    string2 := "Go"
+    compareStrings(string1, string2)
+
+    string3 := "hello"
+    string4 := "world"
+    compareStrings(string3, string4)
+
+}
+//output
+Go and Go are equal  
+hello and world are not equal 
+```
+
+**String concatenation**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    string1 := "Go"
+    string2 := "is awesome"
+    result := string1 + " " + string2
+    fmt.Println(result)
+}
+```
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    string1 := "Go"
+    string2 := "is awesome"
+    result := fmt.Sprintf("%s %s", string1, string2)
+    fmt.Println(result)
+}
+```
+
+**Strings are immutable**
+
+* Strings are immutable in Go. 
+* Once a string is created it's not possible to change it.
+* To workaround this string immutability, strings are converted to a slice of runes. 
+* Then that slice is mutated with whatever changes are needed and converted back to a new string.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func mutate(s []rune) string {  
+    s[0] = 'a' 
+    return string(s)
+}
+func main() {  
+    h := "hello"
+    fmt.Println(mutate([]rune(h)))
+}
+```
+
+**In Go, '⌘' represents a single character (called a Rune), whereas "⌘" represents a string containing the character ⌘.**
 
 
 
