@@ -1751,7 +1751,129 @@ func main() {
 * If we don’t specify the type, then the default type is meant as a rune.
 * A single quote will allow only one character.
 
+**Pointers**
 
+* A pointer is a variable which stores the memory address of another variable.
+* If a variable b has value 156 and is stored at memory address 0x1040a124 and if the variable a holds the address of b => Now a is said to point to b.
+
+**Declaring pointers**
+
+* `*T` is the type of the pointer variable which points to a value of type T.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    b := 255
+    var a *int = &b
+    fmt.Printf("Type of a is %T\n", a)
+    fmt.Println("address of b is", a)
+}
+```
+
+* The `&` operator is used to get the address of a variable. 
+* In line no. 9 of the above program we are assigning the address of b to a whose type is `*int`.
+* Now a is said to point to b. 
+* When we print the value in a, the address of b will be printed. 
+
+**Creating pointers using the new function**
+
+* Go also provides a handy function `new` to create pointers.
+* The new function takes a type as argument and returns a pointer to a newly allocated zero value of the type passed as argument.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    size := new(int)
+    fmt.Printf("Size value is %d, type is %T, address is %v\n", *size, size, size)
+    *size = 85
+    fmt.Println("New size value is", *size)
+}
+//output
+Size value is 0, type is *int, address is 0x414020  
+New size value is 85  
+```
+
+* In the above program, in line no. 8 we use the `new` function to create a pointer of type `int`.
+* This function will return a pointer to a newly allocated zero value of the type `int`.
+* The zero value of type `int` is 0.
+* Hence size will be of type `*int` and will point to 0 i.e `*size` will be 0.
+
+**Dereferencing a pointer**
+
+* Dereferencing a pointer means accessing the value of the variable which the pointer points to. 
+* `*a` is the syntax to deference a.
+
+```
+package main  
+import (  
+    "fmt"
+)
+
+func main() {  
+    b := 255
+    a := &b
+    fmt.Println("address of b is", a)
+    fmt.Println("value of b is", *a)
+}
+//output
+address of b is 0x1040a124  
+value of b is 255  
+```
+
+**Passing pointer to a function**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func change(val *int) {  
+    *val = 55
+}
+func main() {  
+    a := 58
+    fmt.Println("value of a before function call is",a)
+    b := &a
+    change(b)
+    fmt.Println("value of a after function call is", a)
+}
+//output
+value of a before function call is 58  
+value of a after function call is 55  
+```
+
+**Returning pointer from a function**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func hello() *int {  
+    i := 5
+    return &i
+}
+func main() {  
+    d := hello()
+    fmt.Println("Value of d", *d)
+}
+//output
+Value of d 5  
+```
 
 
 
