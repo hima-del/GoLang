@@ -1875,6 +1875,318 @@ func main() {
 Value of d 5  
 ```
 
+**Structs**
+
+* A struct is a user-defined type that represents a collection of fields.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+type Employee struct {  
+    firstName string
+    lastName  string
+    age       int
+    salary    int
+}
+
+func main() {
+
+    //creating struct specifying field names
+    emp1 := Employee{
+        firstName: "Sam",
+        age:       25,
+        salary:    500,
+        lastName:  "Anderson",
+    }
+
+    //creating struct without specifying field names
+    emp2 := Employee{"Thomas", "Paul", 29, 800}
+
+    fmt.Println("Employee 1", emp1)
+    fmt.Println("Employee 2", emp2)
+}
+//output
+Employee 1 {Sam Anderson 25 500}  
+Employee 2 {Thomas Paul 29 800}  
+```
+
+**Creating anonymous structs**
+
+* It is possible to declare structs without creating a new data type. 
+* These types of structs are called anonymous structs.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+func main() {  
+    emp3 := struct {
+        firstName string
+        lastName  string
+        age       int
+        salary    int
+    }{
+        firstName: "Andreah",
+        lastName:  "Nikola",
+        age:       31,
+        salary:    5000,
+    }
+
+    fmt.Println("Employee 3", emp3)
+}
+//output
+Employee 3 {Andreah Nikola 31 5000}  
+```
+
+* In line no 8. of the above program, an anonymous struct variable emp3 is defined. 
+* This struct is called anonymous because it only creates a new struct variable emp3 and does not define any new struct type like named structs.
+
+**Accessing individual fields of a struct**
+
+* The dot `.` operator is used to access the individual fields of a struct.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+type Employee struct {  
+    firstName string
+    lastName  string
+    age       int
+    salary    int
+}
+
+func main() {  
+    emp6 := Employee{
+        firstName: "Sam",
+        lastName:  "Anderson",
+        age:       55,
+        salary:    6000,
+    }
+    fmt.Println("First Name:", emp6.firstName)
+    fmt.Println("Last Name:", emp6.lastName)
+    fmt.Println("Age:", emp6.age)
+    fmt.Printf("Salary: $%d\n", emp6.salary)
+    emp6.salary = 6500
+    fmt.Printf("New Salary: $%d", emp6.salary)
+}
+```
+
+**Pointers to a struct**
+
+* It is also possible to create pointers to a struct.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+type Employee struct {  
+    firstName string
+    lastName  string
+    age       int
+    salary    int
+}
+
+func main() {  
+    emp8 := &Employee{
+        firstName: "Sam",
+        lastName:  "Anderson",
+        age:       55,
+        salary:    6000,
+    }
+    fmt.Println("First Name:", emp8.firstName)
+    fmt.Println("Age:", emp8.age)
+}
+//output
+First Name: Sam  
+Age: 55  
+```
+
+**Anonymous fields**
+
+* It is possible to create structs with fields that contain only a type without the field name. 
+* These kinds of fields are called anonymous fields.
+* The snippet below creates a struct Person which has two anonymous fields string and int
+
+```
+type Person struct {  
+    string
+    int
+}
+```
+
+* Even though anonymous fields do not have an explicit name, by default the name of an anonymous field is the name of its type.
+* For example in the case of the Person struct above, although the fields are anonymous, by default they take the name of the type of the fields. 
+* So Person struct has 2 fields with name string and int.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+type Person struct {  
+    string
+    int
+}
+
+func main() {  
+    p1 := Person{
+        string: "naveen",
+        int:    50,
+    }
+    fmt.Println(p1.string)
+    fmt.Println(p1.int)
+}
+//output
+naveen  
+50  
+```
+
+**nested structs**
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+type Address struct {  
+    city  string
+    state string
+}
+
+type Person struct {  
+    name    string
+    age     int
+    address Address
+}
+
+func main() {  
+    p := Person{
+        name: "Naveen",
+        age:  50,
+        address: Address{
+            city:  "Chicago",
+            state: "Illinois",
+        },
+    }
+
+    fmt.Println("Name:", p.name)
+    fmt.Println("Age:", p.age)
+    fmt.Println("City:", p.address.city)
+    fmt.Println("State:", p.address.state)
+}
+
+```
+
+**Promoted fields**
+
+* Fields that belong to an anonymous struct field in a struct are called promoted fields since they can be accessed as if they belong to the struct which holds the anonymous     struct field.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+type Address struct {  
+    city  string
+    state string
+}
+type Person struct {  
+    name string
+    age  int
+    Address
+}
+
+func main() {  
+    p := Person{
+        name: "Naveen",
+        age:  50,
+        Address: Address{
+            city:  "Chicago",
+            state: "Illinois",
+        },
+    }
+
+    fmt.Println("Name:", p.name)
+    fmt.Println("Age:", p.age)
+    fmt.Println("City:", p.city)   //city is promoted field
+    fmt.Println("State:", p.state) //state is promoted field
+}
+```
+
+**Structs Equality**
+
+* Structs are value types and are comparable if each of their fields are comparable. 
+* Two struct variables are considered equal if their corresponding fields are equal.
+
+```
+package main
+
+import (  
+    "fmt"
+)
+
+type name struct {  
+    firstName string
+    lastName  string
+}
+
+func main() {  
+    name1 := name{
+        firstName: "Steve",
+        lastName:  "Jobs",
+    }
+    name2 := name{
+        firstName: "Steve",
+        lastName:  "Jobs",
+    }
+    if name1 == name2 {
+        fmt.Println("name1 and name2 are equal")
+    } else {
+        fmt.Println("name1 and name2 are not equal")
+    }
+
+    name3 := name{
+        firstName: "Steve",
+        lastName:  "Jobs",
+    }
+    name4 := name{
+        firstName: "Steve",
+    }
+
+    if name3 == name4 {
+        fmt.Println("name3 and name4 are equal")
+    } else {
+        fmt.Println("name3 and name4 are not equal")
+    }
+}
+//output
+name1 and name2 are equal  
+name3 and name4 are not equal  
+```
+
+
+
+
 
 
 
