@@ -167,6 +167,55 @@ fmt.Printf("|%6.2f|%6.2f|\n", 1.2, 3.45)
 
 * Given 12.345 the format %6.3f prints 12.345 while %.3g prints 12.3.
 
+**Iota basic example**
+
+* The iota keyword represents successive integer constants 0, 1, 2,…
+* It resets to 0 whenever the word const appears in the source code, and increments after each const specification.
+
+```
+const (
+    C0 = iota
+    C1 = iota
+    C2 = iota
+)
+fmt.Println(C0, C1, C2) // "0 1 2"
+```
+* This can be simplified to
+
+```
+const (
+	C0 = iota
+	C1
+	C2
+)
+```
+* Here we rely on the fact that expressions are implicitly repeated in a parenthesized const declaration – this indicates a repetition of the preceding expression and its type.
+
+**Start from one**
+
+* To start a list of constants at 1 instead of 0, you can use iota in an arithmetic expression.
+
+```
+const (
+    C1 = iota + 1
+    C2
+    C3
+)
+fmt.Println(C1, C2, C3) // "1 2 3"
+```
+**Skip value**
+
+You can use the blank identifier to skip a value in a list of constants.
+
+```
+const (
+    C1 = iota + 1
+    _
+    C3
+    C4
+)
+fmt.Println(C1, C3, C4) // "1 3 4"
+```
 
 **Basic types**
 
@@ -228,6 +277,28 @@ fmt.Printf("|%6.2f|%6.2f|\n", 1.2, 3.45)
 1. true
 2. false
 ```
+
+**Underlying types**
+
+* Each type T has an underlying type
+* If T is one of the predeclared boolean, numeric, or string types, or a type literal, the corresponding underlying type is T itself.
+* Otherwise, T's underlying type is the underlying type of the type to which T refers in its type declaration.
+
+```
+type (
+	A1 = string
+	A2 = A1
+)
+
+type (
+	B1 string
+	B2 B1
+	B3 []B1
+	B4 B3
+)
+```
+* The underlying type of string, A1, A2, B1, and B2 is string. 
+* The underlying type of []B1, B3, and B4 is []B1.
 
 **Variables**
 
