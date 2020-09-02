@@ -10,6 +10,7 @@ func main() {
 	}
 	fmt.Println(detail)
 	detail["james_annie"] = []string{"agar agar", "chocolate", "football"}
+	delete(detail, "no_dr")
 	for key, value1 := range detail {
 		fmt.Println("this is the record of ", key)
 		for i, value2 := range value1 {
