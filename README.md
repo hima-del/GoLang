@@ -360,6 +360,8 @@ func main() {
 
 * A function is a block of code that performs a specific task. 
 * A function takes a input, performs some calculations on the input and generates a output.
+* We define our function with parameters (if any)
+* We call our function and pass in arguments (if any)
 
 **Function declaration**
 
