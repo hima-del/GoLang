@@ -28,3 +28,5 @@ func even(f func(xi ...int) int, vi ...int) int {
 	}
 	return f(yi...)
 }
+
+//142_exercise41
