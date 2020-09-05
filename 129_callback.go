@@ -8,6 +8,8 @@ func main() {
 	fmt.Println(y)
 	s2 := even(sum, xi...)
 	fmt.Println("even numbers", s2)
+	s3 := odd(sum, xi...)
+	fmt.Println("odd numbers", s3)
 }
 
 func sum(x ...int) (total int) {
@@ -23,6 +25,16 @@ func even(f func(xi ...int) int, vi ...int) int {
 	var yi []int
 	for _, v := range vi {
 		if v%2 == 0 {
+			yi = append(yi, v)
+		}
+	}
+	return f(yi...)
+}
+
+func odd(f func(xi ...int) int, ui ...int) int {
+	var yi []int
+	for _, v := range ui {
+		if v%2 != 0 {
 			yi = append(yi, v)
 		}
 	}
