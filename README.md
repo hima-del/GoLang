@@ -2277,6 +2277,104 @@ name1 and name2 are equal
 name3 and name4 are not equal  
 ```
 
+**type WaitGroup**
+
+* A WaitGroup waits for a collection of goroutines to finish. 
+* The main goroutine calls `Add` to set the number of goroutines to wait for. 
+* Then each of the goroutines runs and calls `Done` when finished. 
+* `Wait` can be used to block until all goroutines have finished.
+
+**func (*WaitGroup) Add**
+
+```
+func (wg *WaitGroup) Add(delta int)
+```
+* Add adds delta, which may be negative, to the WaitGroup counter. 
+* If the counter becomes zero, all goroutines blocked on Wait are released.
+
+**func (*WaitGroup) Done**
+
+```
+func (wg *WaitGroup) Done()
+```
+
+* Done decrements the WaitGroup counter by one.
+
+**func (*WaitGroup) Wait**
+
+```
+func (wg *WaitGroup) Wait()
+```
+
+* Wait blocks until the WaitGroup counter is zero.
+
+```
+package main
+
+import (
+	"fmt"
+	"runtime"
+	"sync"
+)
+
+var wg sync.WaitGroup
+
+func main() {
+	fmt.Println("OS\t", runtime.GOOS)
+	fmt.Println("ARCH\t", runtime.GOARCH)
+	fmt.Println("CPUs\t", runtime.NumCPU())
+	fmt.Println("Goroutines\t", runtime.NumGoroutine())
+
+	wg.Add(1)
+	go foo()
+	bar()
+	fmt.Println("CPUs\t", runtime.NumCPU())
+	fmt.Println("Goroutines\t", runtime.NumGoroutine())
+	wg.Wait()
+}
+
+func foo() {
+	for i := 0; i < 10; i++ {
+		fmt.Println("foo:", i)
+	}
+	wg.Done()
+}
+
+func bar() {
+	for i := 0; i < 10; i++ {
+		fmt.Println("bar:", i)
+	}
+}
+//output
+
+OS       windows
+ARCH     amd64    
+CPUs     4        
+Goroutines       1
+bar: 0
+bar: 1
+bar: 2
+bar: 3
+bar: 4
+bar: 5
+bar: 6
+bar: 7
+bar: 8
+bar: 9
+CPUs     4
+Goroutines       2
+foo: 0
+foo: 1
+foo: 2
+foo: 3
+foo: 4
+foo: 5
+foo: 6
+foo: 7
+foo: 8
+foo: 9
+```
+
 
 
 
