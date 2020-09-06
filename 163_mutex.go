@@ -15,14 +15,17 @@ func main() {
 	const gs = 100
 	var wg sync.WaitGroup
 	wg.Add(gs)
+	var mu sync.WaitGroup
 
 	for i := 0; i < gs; i++ {
 		go func() {
+			mu.Lock()
 			v := counter
 			// time.Sleep(time.Second)
 			runtime.Gosched()
 			v++
 			counter = v
+			mu.Unlock()
 			wg.Done()
 		}()
 		fmt.Println("Goroutines:", runtime.NumGoroutine())
