@@ -2373,6 +2373,7 @@ foo: 6
 foo: 7
 foo: 8
 foo: 9
+//calls function bar then comes to last and there is a wait so wait for foo to be done
 ```
 
 
