@@ -35,7 +35,6 @@ func recieve(even, odd <-chan int, quit <-chan bool) {
 		case i, ok := <-quit:
 			if !ok {
 				fmt.Println("from comma ok bit", i)
-				return
 			} else {
 				fmt.Println("from comma ok bit", i)
 			}
