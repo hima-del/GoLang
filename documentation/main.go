@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/hima-del/GoLang/tree/exercise/documentation/mymath"
+	"./mymath"
 )
 
 func main() {
