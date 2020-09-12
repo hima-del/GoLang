@@ -2480,6 +2480,176 @@ Returned normally from f.
 * The function g takes the int i, and panics if i is greater than 3, or else it calls itself with the argument i+1. 
 * The function f defers a function that calls recover and prints the recovered value (if it is non-nil)
 
+**Goroutines – Concurrency in Golang**
+
+* Go language provides a special feature known as a Goroutines.
+* A Goroutine is a function or method which executes independently and simultaneously in connection with any other Goroutines present in your program. 
+* Every concurrently executing activity in Go language is known as a Goroutines. 
+* You can consider a Goroutine like a light weighted thread. 
+* The cost of creating Goroutines is very small as compared to the thread. 
+* Every program contains at least a single Goroutine and that Goroutine is known as the main Goroutine. 
+* All the Goroutines are working under the main Goroutines if the main Goroutine terminated, then all the goroutine present in the program also terminated. 
+* Goroutine always works in the background.
+
+**How to create a Goroutine?**
+
+* You can create your own Goroutine simply by using go keyword as a prefixing to the function or method call
+
+```
+//program without concurrency
+package main
+
+import "fmt"
+
+func main() {
+	foo()
+	bar()
+}
+
+func foo() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("foo:", i)
+	}
+}
+
+func bar() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("bar:", i)
+	}
+}
+//output
+foo: 0
+foo: 1
+foo: 2
+foo: 3
+foo: 4
+bar: 0
+bar: 1
+bar: 2
+bar: 3
+bar: 4
+```
+
+```
+//program with 3 threads : one is main go routine which launches 2 other goroutines and main function ends and nothing happens here
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	go foo()
+	go bar()
+}
+
+func foo() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("foo:", i)
+	}
+}
+
+func bar() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("bar:", i)
+	}
+}
+```
+
+```
+//adding wait group
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+var wg sync.WaitGroup
+
+func main() {
+
+	wg.Add(2)
+	go foo()
+	go bar()
+	wg.Wait()
+}
+
+func foo() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("foo:", i)
+	}
+	wg.Done()
+}
+
+func bar() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("bar:", i)
+	}
+	wg.Done()
+}
+//output
+bar: 0
+bar: 1
+bar: 2
+bar: 3
+bar: 4
+foo: 0
+foo: 1
+foo: 2
+foo: 3
+foo: 4
+```
+
+```
+//adding sleep
+package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+var wg sync.WaitGroup
+
+func main() {
+
+	wg.Add(2)
+	go foo()
+	go bar()
+	wg.Wait()
+}
+
+func foo() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("foo:", i)
+		time.Sleep(time.Duration(3 * time.Microsecond))
+	}
+	wg.Done()
+}
+
+func bar() {
+	for i := 0; i < 5; i++ {
+		fmt.Println("bar:", i)
+		time.Sleep(time.Duration(20 * time.Microsecond))
+	}
+	wg.Done()
+}
+//output
+bar: 0
+foo: 0
+bar: 1
+bar: 2
+foo: 1
+bar: 3
+bar: 4
+foo: 2
+foo: 3
+foo: 4
+```
+
+
 
 
 
