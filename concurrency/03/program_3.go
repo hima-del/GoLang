@@ -17,14 +17,14 @@ func main() {
 }
 
 func foo() {
-	for i := 0; i < 45; i++ {
+	for i := 0; i < 5; i++ {
 		fmt.Println("foo:", i)
 	}
 	wg.Done()
 }
 
 func bar() {
-	for i := 0; i < 45; i++ {
+	for i := 0; i < 5; i++ {
 		fmt.Println("bar:", i)
 	}
 	wg.Done()
