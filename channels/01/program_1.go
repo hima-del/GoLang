@@ -19,5 +19,5 @@ func main() {
 			fmt.Println(<-c)
 		}
 	}()
-	time.Sleep(time.Second)
+	time.Sleep(time.Second) //before main exits wait a second
 }
