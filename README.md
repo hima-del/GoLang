@@ -2649,6 +2649,53 @@ foo: 3
 foo: 4
 ```
 
+**Close channel**
+
+* Channels can be closed. If a channel is closed, no values can be sent on it. 
+* A channel is open the moment you create it, e.g. `c := make(chan int, 5)`.
+
+```
+package main
+
+func main() {
+    c := make(chan int, 5)
+    c <- 5
+    c <- 3
+    close(c)
+}
+```
+
+* The line `c := make(chan int, 5)` creates a buffered channel of capacity 5. 
+* A buffered channel can store multiple values without it being received.
+* Then data is sent to the channels with the lines `c <- 5` and `c <- 3`.
+* The channel is closed with the function close(channel).
+* If you sent data after the channel is closed, like `c <- 1` after the `close(c)` call, it will throw this error
+* If a channel is closed, you can still read data. 
+* But you cannot send new data into it.
+
+```
+package main
+
+import "fmt"
+
+func main() {
+    c := make(chan int, 5)
+
+    c <- 5
+    c <- 3
+
+    fmt.Println(<-c)
+    close(c)
+    fmt.Println(<-c)
+}
+```
+
+**The Channel Closing Principle**
+
+* One general principle of using Go channels is don't close a channel from the receiver side and don't close a channel if the channel has multiple concurrent senders. 
+* In other words, we should only close a channel in a sender goroutine if the sender is the only sender of the channel.
+    
+
 
 
 
