@@ -6,7 +6,7 @@ import "fmt"
 func main() {
 	c := make(chan int)
 	fmt.Println(isClosed(c))
-	close(c)
+	close(c) //when the channel is closed you cannnot pou values onto the channel but you can still recieve values from that channel
 	fmt.Println(isClosed(c))
 }
 
