@@ -153,4 +153,8 @@ func (t *Template) Execute(wr io.Writer, data interface{}) error
 func (t *Template) ExecuteTemplate(wr io.Writer, name string, data interface{}) error
 ```
 
+**template.Must**
 
+```
+func Must(t *Template, err error) *Template
+```
