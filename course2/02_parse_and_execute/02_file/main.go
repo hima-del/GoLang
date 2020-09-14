@@ -1,13 +1,13 @@
 package main
 
 import (
-	"html/template"
 	"log"
 	"os"
+	"text/template"
 )
 
 func main() {
-	tpl, err := template.ParseFiles("tpl.gohtml")
+	tpl, err := template.ParseFiles("tpl.gohtml") //here tpl is a pointer to the template(a container that holds all the templates)
 	if err != nil {
 		log.Fatalln(err)
 	}
