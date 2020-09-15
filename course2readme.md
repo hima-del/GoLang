@@ -162,4 +162,24 @@ func Must(t *Template, err error) *Template
 `{{range pipeline}} T1 {{end}}`
 	* The value of the pipeline must be an array, slice, map, or channel.
 	* If the value of the pipeline has length zero, nothing is output; otherwise, dot is set to the successive elements of the array, slice, or map and T1 is executed.
-    * If the value is a map and the keys are of basic type with a defined order, the elements will be visited in sorted key order.
+        * If the value is a map and the keys are of basic type with a defined order, the elements will be visited in sorted key order.
+	
+
+**type FuncMap**
+
+* FuncMap is the type of the map defining the mapping from names to functions.
+	
+```
+type FuncMap map[string]interface{}
+```
+* It takes string for key empty interface for value.ie,here we can pass a string for key and a function for value
+* Empty interface is ineterface with no methods and every type has atleat no methods
+* So every type implements the empty interface
+
+**func (*Template) Funcs**
+
+```
+func (t *Template) Funcs(funcMap FuncMap) *Template
+```
+* Funcs adds the elements of the argument map to the template's function map. 
+* It must be called before the template is parsed.
