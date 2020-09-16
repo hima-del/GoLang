@@ -183,3 +183,18 @@ func (t *Template) Funcs(funcMap FuncMap) *Template
 ```
 * Funcs adds the elements of the argument map to the template's function map. 
 * It must be called before the template is parsed.
+
+
+**Nested template definitions**
+
+* When parsing a template, another template may be defined and associated with the template being parsed.
+* Template definitions must appear at the top level of the template, much like global variables in a Go program.
+* The syntax of such definitions is to surround each template declaration with a "define" and "end" action.
+* The define action names the template being created by providing a string constant. 
+
+`{{define "T1"}}ONE{{end}}
+{{define "T2"}}TWO{{end}}
+{{define "T3"}}{{template "T1"}} {{template "T2"}}{{end}}
+{{template "T3"}}`
+
+* This defines two templates, T1 and T2, and a third T3 that invokes the other two when it is executed. 
