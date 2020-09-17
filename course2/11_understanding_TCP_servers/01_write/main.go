@@ -15,7 +15,7 @@ func main() {
 	defer li.Close()
 
 	for {
-		conn, err := li.Accept()
+		conn, err := li.Accept() //once we accept we get a connection and we can read or write from that connection
 		if err != nil {
 			log.Fatalln(err)
 			continue
