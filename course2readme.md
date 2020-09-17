@@ -253,7 +253,7 @@ if err != nil {
 defer l.Close()
 for {
     // Wait for a connection.
-    conn, err := l.Accept()
+    conn, err := l.Accept() //once we accept we get a connection and we can read or write from that connection
     if err != nil {
         log.Fatal(err)
     }
@@ -290,3 +290,23 @@ func WriteString(w Writer, s string) (n int, err error)
 * WriteString writes the contents of the string s to w, which accepts a slice of bytes.
     
     
+**func NewScanner**
+
+```
+func NewScanner(r io.Reader) *Scanner
+```
+* NewScanner returns a new Scanner to read from r. 
+* The split function defaults to ScanLines.
+* Returnes a pointer to scanner 
+* when we have pointer to scanner we have scan() method attched to it.
+
+**func (*Scanner) Scan**
+
+```
+func (s *Scanner) Scan() bool
+```
+
+* Scan advances the Scanner to the next token, which will then be available through the Bytes or Text method. 
+* It returns false when the scan stops, either by reaching the end of the input or an error. 
+* After Scan returns false, the Err method will return any error that occurred during scanning, except that if it was io.EOF, Err will return nil. 
+* Scan panics if the split function returns too many empty tokens without advancing the input. 
