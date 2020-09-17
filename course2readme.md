@@ -217,6 +217,13 @@ func (t *Template) Funcs(funcMap FuncMap) *Template
      
      ` status-line = HTTP-version SP status-code SP reason-phrase CRLF`
      
+  **func Dial**
+  
+  ```
+func Dial(network, address string) (Conn, error)
+```
+ * Dial connects to the address on the named network.
+     
  **func Listen**
    
    ```
@@ -310,3 +317,36 @@ func (s *Scanner) Scan() bool
 * It returns false when the scan stops, either by reaching the end of the input or an error. 
 * After Scan returns false, the Err method will return any error that occurred during scanning, except that if it was io.EOF, Err will return nil. 
 * Scan panics if the split function returns too many empty tokens without advancing the input. 
+
+**func ReadAll**
+
+```
+func ReadAll(r io.Reader) ([]byte, error)
+```
+
+* ReadAll reads from r until an error or EOF and returns the data it read.
+* A successful call returns err == nil, not err == EOF. 
+
+
+```
+package main
+
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"strings"
+)
+
+func main() {
+	r := strings.NewReader("Go is a general-purpose language designed with systems programming in mind.")
+
+	b, err := ioutil.ReadAll(r)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%s", b)
+
+}
+```
