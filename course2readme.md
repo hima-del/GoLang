@@ -422,3 +422,18 @@ type Request struct {
 }
 ```
 
+* `form` and `postform` allows us to get data from a form
+* These fields are only available after ParseForm is called.
+* form give data from URL, query string and form body(form data)
+* postform only give us data from body
+
+**func (*Request) ParseForm**
+
+```
+func (r *Request) ParseForm() error
+```
+* ParseForm populates r.Form and r.PostForm.
+* For all requests, ParseForm parses the raw query from the URL and updates r.Form.
+* For POST, PUT, and PATCH requests, it also reads the request body, parses it as a form and puts the results into both r.PostForm and r.Form. 
+* Request body parameters take precedence over URL query string values in r.Form.
+
