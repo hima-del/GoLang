@@ -374,3 +374,51 @@ func main() {
 Fields are: ["foo" "bar" "baz"]
 ```
 
+**type Handler**
+
+```
+type Handler interface {
+    ServeHTTP(ResponseWriter, *Request)
+}
+```
+
+* A Handler responds to an HTTP request.
+* ServeHTTP should write reply headers and data to the ResponseWriter and then return. 
+* Returning signals that the request is finished
+
+**func ListenAndServe**
+
+```
+func ListenAndServe(addr string, handler Handler) error
+```
+
+* ListenAndServe listens on the TCP network address addr and then calls Serve with handler to handle requests on incoming connections.
+* Accepted connections are configured to enable TCP keep-alives.
+
+**Request**
+
+```
+type Request struct {
+    Method string
+    URL *url.URL
+	//	Header = map[string][]string{
+	//		"Accept-Encoding": {"gzip, deflate"},
+	//		"Accept-Language": {"en-us"},
+	//		"Foo": {"Bar", "two"},
+	//	}
+    Header Header
+    Body io.ReadCloser
+    ContentLength int64
+    Host string
+    // This field is only available after ParseForm is called.
+    Form url.Values
+    // This field is only available after ParseForm is called.
+    PostForm url.Values
+    MultipartForm *multipart.Form
+    // RemoteAddr allows HTTP servers and other software to record
+	// the network address that sent the request, usually for
+	// logging. 
+    RemoteAddr string
+}
+```
+
