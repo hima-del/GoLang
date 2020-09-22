@@ -383,6 +383,7 @@ type Handler interface {
 ```
 
 * A Handler responds to an HTTP request.
+* A server handles request by writing responses.
 * ServeHTTP should write reply headers and data to the ResponseWriter and then return. 
 * Returning signals that the request is finished
 
