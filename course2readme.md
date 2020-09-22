@@ -378,7 +378,7 @@ Fields are: ["foo" "bar" "baz"]
 
 ```
 type Handler interface {
-    ServeHTTP(ResponseWriter, *Request)
+    ServeHTTP(ResponseWriter, *Request) //when we have ServeHTTP you have a request and the server responds to that request.
 }
 ```
 
