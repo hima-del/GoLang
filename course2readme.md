@@ -549,3 +549,23 @@ type ResponseWriter interface {
 }
 ```
 
+**Setting a response header**
+
+* An http.ResponseWriter has a method Header() which returns a http.Header.
+
+`type Header map[string][]string`
+
+* Look at the methods which are attached to type http.Header
+```
+type Header
+func (h Header) Add(key, value string)
+func (h Header) Del(key string)
+func (h Header) Get(key string) string
+func (h Header) Set(key, value string)
+func (h Header) Write(w io.Writer) error
+func (h Header) WriteSubset(w io.Writer, exclude map[string]bool) error
+```
+* We can set headers for a response like this:
+```
+res.Header().Set("Content-Type", "text/html; charset=utf-8")
+```
