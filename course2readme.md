@@ -640,7 +640,9 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request)
 
 * ServeHTTP calls f(w, r).
 
-
+* `Handle` wants a `handler`
+* A `hander` is anything that has  `ServeHTTP(w ResponseWriter, r *Request)` method
+* `Handlerfunc` has this method attched to it
 
 
 
