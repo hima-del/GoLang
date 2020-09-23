@@ -557,7 +557,7 @@ type ResponseWriter interface {
 `type Header map[string][]string`
 
 * Look at the methods which are attached to type http.Header
-```
+``` 
 type Header
 func (h Header) Add(key, value string)
 func (h Header) Del(key string)
@@ -570,3 +570,22 @@ func (h Header) WriteSubset(w io.Writer, exclude map[string]bool) error
 ```
 res.Header().Set("Content-Type", "text/html; charset=utf-8")
 ```
+
+**type ServeMux**
+
+* ServeMux is an HTTP request multiplexer.
+* It matches the URL of each incoming request against a list of registered patterns and calls the handler for the pattern that most closely matches the URL.
+* // NewServeMux allocates and returns a new ServeMux.
+
+```
+func NewServeMux() *ServeMux { return new(ServeMux) }
+```
+
+
+
+
+
+
+
+
+
