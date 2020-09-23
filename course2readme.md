@@ -581,6 +581,64 @@ res.Header().Set("Content-Type", "text/html; charset=utf-8")
 func NewServeMux() *ServeMux { return new(ServeMux) }
 ```
 
+**func (*ServeMux) Handle**
+
+```
+func (mux *ServeMux) Handle(pattern string, handler Handler)
+```
+
+* Handle registers the handler for the given pattern. 
+* If a handler already exists for pattern, Handle panics.
+
+**func HandleFunc**
+
+```
+func HandleFunc(pattern string, handler func(ResponseWriter, *Request))
+```
+
+* HandleFunc registers the handler function for the given pattern in the DefaultServeMux. 
+* The `func` can be any function with responsewriter and pointer to request as parameters
+
+```
+package main
+
+import (
+	"io"
+	"log"
+	"net/http"
+)
+
+func main() {
+	h1 := func(w http.ResponseWriter, _ *http.Request) {
+		io.WriteString(w, "Hello from a HandleFunc #1!\n")
+	}
+	h2 := func(w http.ResponseWriter, _ *http.Request) {
+		io.WriteString(w, "Hello from a HandleFunc #2!\n")
+	}
+
+	http.HandleFunc("/", h1)
+	http.HandleFunc("/endpoint", h2)
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+```
+
+**type HandlerFunc**
+
+* The HandlerFunc type is an adapter to allow the use of ordinary functions as HTTP handlers. 
+* If f is a function with the appropriate signature, HandlerFunc(f) is a Handler that calls f.
+
+```
+type HandlerFunc func(ResponseWriter, *Request)
+```
+
+**func (HandlerFunc) ServeHTTP**
+
+```
+func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request)
+```
+
+* ServeHTTP calls f(w, r).
 
 
 
