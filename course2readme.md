@@ -711,3 +711,22 @@ func (r *Router) POST(path string, handle Handle)
 ```
 func (r *Router) Handle(method, path string, mc MiddlewareChain, h Handler)
 ```
+
+**type Params**
+
+```
+type Params []Param
+```
+
+* Params is a Param-slice, as returned by the router. 
+* The slice is ordered, the first URL parameter is also the first slice value.
+
+**func (Params) ByName**
+
+```
+func (ps Params) ByName(name string) string
+```
+
+* ByName returns the value of the first Param which key matches the given name. 
+* If no matching Param is found, an empty string is returned.
+
