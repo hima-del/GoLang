@@ -730,3 +730,62 @@ func (ps Params) ByName(name string) string
 * ByName returns the value of the first Param which key matches the given name. 
 * If no matching Param is found, an empty string is returned.
 
+**func (*File) Stat**
+
+```
+func (f *File) Stat() (FileInfo, error)
+```
+
+* Stat returns the FileInfo structure describing file
+
+**type FileInfo**
+
+* A FileInfo describes a file and is returned by Stat and Lstat.
+
+```
+type FileInfo interface {
+    Name() string       // base name of the file
+    Size() int64        // length in bytes for regular files; system-dependent for others
+    Mode() FileMode     // file mode bits
+    ModTime() time.Time // modification time
+    IsDir() bool        // abbreviation for Mode().IsDir()
+    Sys() interface{}   // underlying data source (can return nil)
+}
+```
+
+**func ServeContent**
+
+```
+func ServeContent(w ResponseWriter, req *Request, name string, modtime time.Time, content io.ReadSeeker)
+```
+
+* ServeContent replies to the request using the content in the provided ReadSeeker. 
+* The main benefit of ServeContent over io.Copy is that it handles Range requests properly, sets the MIME type, and handles If-Match, If-Unmodified-Since, If-None-Match, If-       Modified-Since, and If-Range requests.
+
+**func ServeFile**
+
+```
+func ServeFile(w ResponseWriter, r *Request, name string)
+```
+
+* ServeFile replies to the request with the contents of the named file or directory.
+
+
+**func FileServer**
+
+```
+func FileServer(root FileSystem) Handler
+```
+
+* FileServer returns a handler that serves HTTP requests with the contents of the file system rooted at root.
+* To use the operating system's file system implementation, use `http.Dir`
+```
+http.Handle("/", http.FileServer(http.Dir("/tmp")))
+```
+
+
+
+
+
+
+
