@@ -14,18 +14,21 @@ func main() {
 
 func dog(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-
-	io.WriteString(w, `
-	<img src="/toby.jpg">
-	`)
+	io.WriteString(w, `<img src="toby.jpg">`)
 }
 
 func dogPic(w http.ResponseWriter, req *http.Request) {
-	f, err := os.Open("toby.jpg") //here we get pointer to a file and it implements a reader and writer interface ie,we can write to it and read from it
+	f, err := os.Open("toby.jpg")
 	if err != nil {
 		http.Error(w, "filr not found", 404)
 		return
 	}
 	defer f.Close()
-	io.Copy(w, f) //we are copying from the file to the response writer
+
+	fi, err := f.Stat()
+	if err != nil {
+		http.Error(w, "file not found", 404)
+		return
+	}
+	http.ServeContent(w, req, f.Name(), fi.ModTime(), f)
 }
