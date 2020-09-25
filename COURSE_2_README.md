@@ -819,6 +819,39 @@ func (r *Request) FormValue(key string) string
 
 * FormValue returns the first value for the named component of the query.
 
+**func (*Request) FormFile**
 
+```
+func (r *Request) FormFile(key string) (multipart.File, *multipart.FileHeader, error)
+```
 
+* FormFile returns the first file for the provided form key.
+
+**type File**
+
+* File is an interface to access the file part of a multipart message. 
+* Its contents may be either stored in memory or on disk. 
+* If stored on disk, the File's underlying concrete type will be an *os.File.
+
+```
+type File interface {
+    io.Reader
+    io.ReaderAt
+    io.Seeker
+    io.Closer
+}
+```
+
+**type FileHeader**
+
+* A FileHeader describes a file part of a multipart request.
+
+```
+type FileHeader struct {
+    Filename string
+    Header   textproto.MIMEHeader
+    Size     int64 // Go 1.9
+    // contains filtered or unexported fields
+}
+```
 
