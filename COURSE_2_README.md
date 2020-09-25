@@ -177,7 +177,7 @@ type FuncMap map[string]interface{}
 * Empty interface is ineterface with no methods and every type has atleat no methods
 * So every type implements the empty interface
 
-**func (*Template) Funcs**
+**`func (*Template) Funcs`**
 
 ```
 func (t *Template) Funcs(funcMap FuncMap) *Template
@@ -307,7 +307,7 @@ func NewScanner(r io.Reader) *Scanner
 * Returnes a pointer to scanner 
 * when we have pointer to scanner we have scan() method attched to it.
 
-**func (*Scanner) Scan**
+**`func (*Scanner) Scan`**
 
 ```
 func (s *Scanner) Scan() bool
@@ -853,5 +853,46 @@ type FileHeader struct {
     Size     int64 // Go 1.9
     // contains filtered or unexported fields
 }
+```
+
+**func Create**
+
+```
+func Create(name string) (*File, error)
+```
+
+* Create creates or truncates the named file.
+
+
+**func Join**
+
+```
+func Join(elem ...string) string
+```
+
+* Join joins any number of path elements into a single path, separating them with an OS specific Separator. 
+* Empty elements are ignored. 
+
+```
+package main
+
+import (
+	"fmt"
+	"path/filepath"
+)
+
+func main() {
+	fmt.Println("On Unix:")
+	fmt.Println(filepath.Join("a", "b", "c"))
+	fmt.Println(filepath.Join("a", "b/c"))
+	fmt.Println(filepath.Join("a/b", "c"))
+	fmt.Println(filepath.Join("a/b", "/c"))
+}
+
+//output
+a/b/c
+a/b/c
+a/b/c
+a/b/c
 ```
 
