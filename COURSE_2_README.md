@@ -907,3 +907,32 @@ a/b/c
 
 * All you need to know is use multipart/form-data when your form includes any <input type="file"> elements. 
 
+**Redirects**
+
+* A client makes a request to server => request is for certain resource => the server redirects the client to another location
+
+```
+StatusMultipleChoices  = 300 // RFC 7231, 6.4.1
+    StatusMovedPermanently = 301 // RFC 7231, 6.4.2
+    StatusFound            = 302 // RFC 7231, 6.4.3
+    StatusSeeOther         = 303 // RFC 7231, 6.4.4
+    StatusNotModified      = 304 // RFC 7232, 4.1
+    StatusUseProxy         = 305 // RFC 7231, 6.4.5
+
+    StatusTemporaryRedirect = 307 // RFC 7231, 6.4.7
+    StatusPermanentRedirect = 308 // RFC 7538, 3
+ ```
+   
+  * On the web, we have a client / server architecture. 
+  * Clients make requests, and servers write responses to those clients.
+  * The request and response are both just text that must conform to the rules of HTTP.
+  * Both the request & response have a start line, headers, and a body. 
+  * The request start line is called the “request line”. It consists of 
+
+ `request-line = method SP request-target SP HTTP-version CRLF`
+
+  * The response start line is called the “status line”. It consists of 
+
+  `status-line = HTTP-version SP status-code SP reason-phrase CRLF`
+
+
