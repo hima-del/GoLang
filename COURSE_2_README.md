@@ -977,3 +977,44 @@ func Redirect(w ResponseWriter, r *Request, url string, code int)
 * You can expire a cookie by setting one of these two fields: Expires or MaxAge
 * Expires sets the exact time when the cookie expires. Expires is Deprecated.
 * MaxAge sets how long the cookie should live (in seconds).
+
+**type Cookie**
+
+* A Cookie represents an HTTP cookie as sent in the Set-Cookie header of an HTTP response or the Cookie header of an HTTP request.
+
+```
+type Cookie struct {
+    Name  string
+    Value string
+
+    Path       string    // optional
+    Domain     string    // optional
+    Expires    time.Time // optional
+    RawExpires string    // for reading cookies only
+
+    // MaxAge=0 means no 'Max-Age' attribute specified.
+    // MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'
+    // MaxAge>0 means Max-Age attribute present and given in seconds
+    MaxAge   int
+    Secure   bool
+    HttpOnly bool
+    SameSite SameSite // Go 1.11
+    Raw      string
+    Unparsed []string // Raw text of unparsed attribute-value pairs
+}
+```
+
+**func SetCookie**
+
+```
+func SetCookie(w ResponseWriter, cookie *Cookie)
+```
+
+* SetCookie adds a Set-Cookie header to the provided ResponseWriter's headers. 
+* The provided cookie must have a valid Name.
+
+**func (*Request) Cookie**
+
+```
+func (r *Request) Cookie(name string) (*Cookie, error)
+```
