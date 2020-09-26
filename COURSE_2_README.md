@@ -936,3 +936,15 @@ StatusMultipleChoices  = 300 // RFC 7231, 6.4.1
   `status-line = HTTP-version SP status-code SP reason-phrase CRLF`
 
 
+   **301 Moved Permanently**
+
+   * The 301 (Moved Permanently) status code indicates that the target resource has been assigned a new permanent URI and any future references to this resource ought to use one      of the enclosed URIs.
+
+   **303 See Other**
+
+   * The 303 (See Other) status code indicates that the server is redirecting the user agent to a different resource, as indicated by a URI in the Location header field, which        is intended to provide an indirect response to the original request.
+   
+   **307 Temporary Redirect**
+
+   * The 307 (Temporary Redirect) status code indicates that the target resource resides temporarily under a different URI and the user agent MUST NOT change the request method      if it performs an automatic redirection to that URI. 
+   * Since the redirection can change over time, the client ought to continue using the original effective request URI for future requests.
