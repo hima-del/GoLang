@@ -896,3 +896,14 @@ a/b/c
 a/b/c
 ```
 
+**Enctype**
+
+* “When you make a POST request, you have to encode the data that forms the body of the request in some way. 
+* HTML forms provide three methods of encoding:
+
+●	application/x-www-form-urlencoded (the default) 
+●	multipart/form-data 
+●	text/plain 
+
+* All you need to know is use multipart/form-data when your form includes any <input type="file"> elements. 
+
