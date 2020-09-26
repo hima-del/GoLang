@@ -958,3 +958,22 @@ func Redirect(w ResponseWriter, r *Request, url string, code int)
 
 * Redirect replies to the request with a redirect to url, which may be a path relative to the request path.
 * The provided code should be in the 3xx range and is usually StatusMovedPermanently, StatusFound or StatusSeeOther.
+
+
+**cookies**
+
+* cookies is a file that can store information in which a server can write to client's machine if the client allows cookies to be written.
+* if we are able to write a cookie to a client's machine then anytime the client makes request back to server,it will send that cookie
+* A cookie is a file that is stored on the client's machine.
+* Cookies are written by domains to store information on the client's machine.
+* Cookies are only sent by the browser to the domain which wrote them.
+* With every request to a specific domain, the client's web browser looks to see if there is a cookie from that domain on the client's machine.
+* If there is a cookie that has been written by that particular domain, then the browser will send the cookie with every request to that domain.
+* Cookies are domain specific.
+
+**Expiring a cookie**
+
+* If the Expires or MaxAge field isn't set, then the cookie is deleted when the browser is closed. This is colloquially known as a "session cookie."
+* You can expire a cookie by setting one of these two fields: Expires or MaxAge
+* Expires sets the exact time when the cookie expires. Expires is Deprecated.
+* MaxAge sets how long the cookie should live (in seconds).
