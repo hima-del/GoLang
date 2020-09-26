@@ -1013,7 +1013,7 @@ func SetCookie(w ResponseWriter, cookie *Cookie)
 * SetCookie adds a Set-Cookie header to the provided ResponseWriter's headers. 
 * The provided cookie must have a valid Name.
 
-**func (*Request) Cookie**
+**`func (*Request) Cookie`**
 
 ```
 func (r *Request) Cookie(name string) (*Cookie, error)
