@@ -948,3 +948,13 @@ StatusMultipleChoices  = 300 // RFC 7231, 6.4.1
 
    * The 307 (Temporary Redirect) status code indicates that the target resource resides temporarily under a different URI and the user agent MUST NOT change the request method      if it performs an automatic redirection to that URI. 
    * Since the redirection can change over time, the client ought to continue using the original effective request URI for future requests.
+
+
+ **func Redirect**
+ 
+ ```
+func Redirect(w ResponseWriter, r *Request, url string, code int)
+```
+
+* Redirect replies to the request with a redirect to url, which may be a path relative to the request path.
+* The provided code should be in the 3xx range and is usually StatusMovedPermanently, StatusFound or StatusSeeOther.
