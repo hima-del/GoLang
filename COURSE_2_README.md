@@ -996,8 +996,8 @@ type Cookie struct {
     // MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'
     // MaxAge>0 means Max-Age attribute present and given in seconds
     MaxAge   int
-    Secure   bool
-    HttpOnly bool
+    Secure   bool //this is set true when we are using https . https is what secure means
+    HttpOnly bool // you can access this cookie with javascript
     SameSite SameSite // Go 1.11
     Raw      string
     Unparsed []string // Raw text of unparsed attribute-value pairs
