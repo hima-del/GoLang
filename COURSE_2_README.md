@@ -428,7 +428,7 @@ type Request struct {
 * form give data from URL, query string and form body(form data)
 * postform only give us data from body
 
-**func (*Request) ParseForm**
+**`func (*Request) ParseForm`**
 
 ```
 func (r *Request) ParseForm() error
@@ -581,7 +581,7 @@ res.Header().Set("Content-Type", "text/html; charset=utf-8")
 func NewServeMux() *ServeMux { return new(ServeMux) }
 ```
 
-**func (*ServeMux) Handle**
+**`func (*ServeMux) Handle`**
 
 ```
 func (mux *ServeMux) Handle(pattern string, handler Handler)
@@ -694,19 +694,19 @@ func New() *Router
 ```
 * New returns a new initialized Router. 
 
-**func (*Router) GET**
+**`func (*Router) GET`**
 
 ```
 func (r *Router) GET(path string, handle Handle)
 ```
 
-**func (*Router) POST**
+**`func (*Router) POST`**
 
 ```
 func (r *Router) POST(path string, handle Handle)
 ```
 
-**func (*Router) Handle**
+**`func (*Router) Handle`**
 
 ```
 func (r *Router) Handle(method, path string, mc MiddlewareChain, h Handler)
@@ -730,7 +730,7 @@ func (ps Params) ByName(name string) string
 * ByName returns the value of the first Param which key matches the given name. 
 * If no matching Param is found, an empty string is returned.
 
-**func (*File) Stat**
+**`func (*File) Stat`**
 
 ```
 func (f *File) Stat() (FileInfo, error)
@@ -811,7 +811,7 @@ url
 * You can have multiple `identifier=value` by separating them with the & ampersand.
 
 
-**func (*Request) FormValue**
+**`func (*Request) FormValue`**
 
 ```
 func (r *Request) FormValue(key string) string
@@ -819,7 +819,7 @@ func (r *Request) FormValue(key string) string
 
 * FormValue returns the first value for the named component of the query.
 
-**func (*Request) FormFile**
+**`func (*Request) FormFile`**
 
 ```
 func (r *Request) FormFile(key string) (multipart.File, *multipart.FileHeader, error)
@@ -1017,4 +1017,62 @@ func SetCookie(w ResponseWriter, cookie *Cookie)
 
 ```
 func (r *Request) Cookie(name string) (*Cookie, error)
+```
+
+`ErrNoCookie is returned by Request's Cookie method when a cookie is not found.
+
+var ErrNoCookie = errors.New("http: named cookie not present")
+`
+
+**func Atoi**
+
+```
+func Atoi(s string) (int, error)
+```
+
+* Atoi is equivalent to ParseInt(s, 10, 0), converted to type int.
+
+```
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func main() {
+	v := "10"
+	if s, err := strconv.Atoi(v); err == nil {
+		fmt.Printf("%T, %v", s, s)
+	}
+
+}
+//output
+int, 10
+```
+
+**func Itoa**
+
+```
+func Itoa(i int) string
+```
+
+* Itoa is equivalent to FormatInt(int64(i), 10).
+
+```
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func main() {
+	i := 10
+	s := strconv.Itoa(i)
+	fmt.Printf("%T, %v\n", s, s)
+
+}
+//output
+string, 10
 ```
