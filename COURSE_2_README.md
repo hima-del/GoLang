@@ -1076,3 +1076,19 @@ func main() {
 //output
 string, 10
 ```
+
+**func GenerateFromPassword**
+
+```
+func GenerateFromPassword(password []byte, cost int) ([]byte, error)
+```
+
+* GenerateFromPassword returns the bcrypt hash of the password at the given cost. 
+
+**func CompareHashAndPassword**
+
+```
+func CompareHashAndPassword(hashedPassword, password []byte) error
+```
+
+* CompareHashAndPassword compares a bcrypt hashed password with its possible plaintext equivalent.
