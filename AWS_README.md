@@ -43,3 +43,52 @@
 
 * ctrl + c
 * exit
+
+
+**Persisting your application**
+
+* To run our application after the terminal session has ended, we must do one of the following:
+
+**Possible options**
+
+* screen
+* init.d
+* upstart
+* system.d
+
+**System.d**
+
+**Create a configuration file**
+
+* cd /etc/systemd/system/
+* sudo nano <filename>.service
+
+```
+[Unit]
+Description=Go Server
+
+[Service]
+ExecStart=/home/<username>/<exepath>
+User=root
+Group=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**Add the service to systemd**
+
+* sudo systemctl enable <filename>.service
+
+**Activate the service**
+
+* sudo systemctl start <filename>.service
+
+**Check if systemd started it**
+
+* sudo systemctl status <filename>.service
+
+**Stop systemd if so desired**
+
+* sudo systemctl stop <filename>.service
