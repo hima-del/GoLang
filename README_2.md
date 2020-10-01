@@ -202,3 +202,7 @@ Naveen R is 25 years old
 * This is called parallelism.
 
 ![Image of concurrency and parallelism](https://github.com/hima-del/GoLang/blob/master/04_Golang_Basics_2/03_concurrency/images/concurrency-parallelism-copy.png)
+
+
+
+
