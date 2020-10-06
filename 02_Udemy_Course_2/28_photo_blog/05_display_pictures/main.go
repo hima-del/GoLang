@@ -21,13 +21,14 @@ func init() {
 
 func main() {
 	http.HandleFunc("/", index)
+	// add route to serve pictures
+	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
 
 func index(w http.ResponseWriter, req *http.Request) {
 	c := getCookie(w, req)
-	// process form submission
 	if req.Method == http.MethodPost {
 		mf, fh, err := req.FormFile("nf")
 		if err != nil {
@@ -57,7 +58,8 @@ func index(w http.ResponseWriter, req *http.Request) {
 		c = appendValue(w, c, fname)
 	}
 	xs := strings.Split(c.Value, "|")
-	tpl.ExecuteTemplate(w, "index.gohtml", xs)
+	// sliced cookie values to only send over images
+	tpl.ExecuteTemplate(w, "index.gohtml", xs[1:])
 }
 
 func getCookie(w http.ResponseWriter, req *http.Request) *http.Cookie {
@@ -73,7 +75,6 @@ func getCookie(w http.ResponseWriter, req *http.Request) *http.Cookie {
 	return c
 }
 
-// takes in a file name now also
 func appendValue(w http.ResponseWriter, c *http.Cookie, fname string) *http.Cookie {
 	s := c.Value
 	if !strings.Contains(s, fname) {
