@@ -1111,14 +1111,24 @@ func NewEncoding(encoder string) *Encoding
 * NewEncoding returns a new padded Encoding defined by the given alphabet
 
 
-**func (*Encoding) EncodeToString**
+**`func (*Encoding) EncodeToString`**
 `
 func (enc *Encoding) EncodeToString(src []byte) string
 `
 * EncodeToString returns the base64 encoding of src.
 
-**func (*Encoding) DecodeString**
+**`func (*Encoding) DecodeString`**
 `
 func (enc *Encoding) DecodeString(s string) ([]byte, error)
 `
 * DecodeString returns the bytes represented by the base64 string s.
+
+
+**package context**
+
+**func WithValue**
+`
+func WithValue(parent Context, key, val interface{}) Context
+`
+* WithValue returns a copy of parent in which the value associated with key is val.
+
