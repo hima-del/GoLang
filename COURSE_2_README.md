@@ -1158,3 +1158,10 @@ func Background() Context
 * Background returns a non-nil, empty Context. 
 * It is never canceled, has no values, and has no deadline. 
 * It is typically used by the main function, initialization, and tests, and as the top-level Context for incoming requests.
+
+**func ListenAndServeTLS**
+`
+func ListenAndServeTLS(addr, certFile, keyFile string, handler Handler) error
+`
+* ListenAndServeTLS acts identically to ListenAndServe, except that it expects HTTPS connections. 
+* Additionally, files containing a certificate and matching private key for the server must be provided.
