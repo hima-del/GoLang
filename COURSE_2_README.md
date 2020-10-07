@@ -1132,3 +1132,29 @@ func WithValue(parent Context, key, val interface{}) Context
 `
 * WithValue returns a copy of parent in which the value associated with key is val.
 
+**func WithTimeout**
+
+`
+func WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc) {
+	return WithDeadline(parent, time.Now().Add(timeout))
+`
+* WithTimeout returns WithDeadline(parent, time.Now().Add(timeout)).
+* Canceling this context releases resources associated with it, so code should
+* call cancel as soon as the operations running in this Context complete:
+
+
+**func WithCancel**
+`
+func WithCancel(parent Context) (ctx Context, cancel CancelFunc)
+`
+* WithCancel returns a copy of parent with a new Done channel.
+* The returned context's Done channel is closed when the returned cancel function is called or when the parent context's Done channel is closed, whichever happens first.
+* Canceling this context releases resources associated with it, so code should call cancel as soon as the operations running in this Context complete.
+
+**func Background**
+`
+func Background() Context
+`
+* Background returns a non-nil, empty Context. 
+* It is never canceled, has no values, and has no deadline. 
+* It is typically used by the main function, initialization, and tests, and as the top-level Context for incoming requests.
