@@ -1092,3 +1092,33 @@ func CompareHashAndPassword(hashedPassword, password []byte) error
 ```
 
 * CompareHashAndPassword compares a bcrypt hashed password with its possible plaintext equivalent.
+
+**package "crypto/hmac"**
+
+**func New**
+
+`
+func New(h func() hash.Hash, key []byte) hash.Hash
+`
+* New returns a new HMAC hash using the given hash.Hash type and key.
+
+**encoding/base64**
+
+**func NewEncoding**
+`
+func NewEncoding(encoder string) *Encoding
+`
+* NewEncoding returns a new padded Encoding defined by the given alphabet
+
+
+**func (*Encoding) EncodeToString**
+`
+func (enc *Encoding) EncodeToString(src []byte) string
+`
+* EncodeToString returns the base64 encoding of src.
+
+**func (*Encoding) DecodeString**
+`
+func (enc *Encoding) DecodeString(s string) ([]byte, error)
+`
+* DecodeString returns the bytes represented by the base64 string s.
