@@ -1165,3 +1165,12 @@ func ListenAndServeTLS(addr, certFile, keyFile string, handler Handler) error
 `
 * ListenAndServeTLS acts identically to ListenAndServe, except that it expects HTTPS connections. 
 * Additionally, files containing a certificate and matching private key for the server must be provided.
+
+**Go & JSON - Marshal & Encode** 
+
+* Now we will see how to use Go with JSON. 
+* The most important thing to understand is that you can marshal *OR* encode Go code to JSON.
+* Regardless of whether or not you use “marshal” or “encode”, your Go data structures will be turned into JSON. 
+* So what’s the difference? Marshal is for turning Go data structures into JSON and then assigning the JSON to a variable. 
+* Encode is used to turn Go data structures into JSON and then send it over the wire. 
+* Both “marshal” and “encode” have their counterparts: “unmarshal” and “decode”.
