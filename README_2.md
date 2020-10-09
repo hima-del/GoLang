@@ -280,6 +280,8 @@ func main() {
 ```
 ![Image of concurrency and parallelism](https://github.com/hima-del/GoLang/blob/master/04_Golang_Basics_2/03_concurrency/images/Goroutines-explained.png)
 
+**What is Defer?**
 
+* Defer statement is used to execute a function call just before the surrounding function where the defer statement is present returns.
 
 
