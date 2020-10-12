@@ -1174,3 +1174,10 @@ func ListenAndServeTLS(addr, certFile, keyFile string, handler Handler) error
 * So what’s the difference? Marshal is for turning Go data structures into JSON and then assigning the JSON to a variable. 
 * Encode is used to turn Go data structures into JSON and then send it over the wire. 
 * Both “marshal” and “encode” have their counterparts: “unmarshal” and “decode”.
+
+**Using Curl**
+
+* Start your server
+* go run main.go
+* Enter this at the terminal
+* curl http://localhost:8080
