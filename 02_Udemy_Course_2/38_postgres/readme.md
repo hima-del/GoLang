@@ -1,21 +1,53 @@
-list databases
-\l
-connect to a database
-\c <database name>
-switch back to postgres database
-\c postgres
-log out
-\q
-create database
-CREATE DATABASE employees;
-see current user
-SELECT current_user;
-see current database
-SELECT current_database();
-drop (remove, delete) database
-DROP DATABASE <database name>;
+**list databases**
 
-create table
+```
+\l
+```
+**connect to a database**
+
+```
+\c <database name>
+```
+
+**switch back to postgres database**
+
+```
+\c postgres
+```
+
+**log out**
+
+```
+\q
+```
+
+**create database**
+
+```
+CREATE DATABASE employees;
+```
+
+**see current user**
+
+```
+SELECT current_user;
+```
+
+**see current database**
+
+```
+SELECT current_database();
+```
+
+**drop (remove, delete) database**
+
+```
+DROP DATABASE <database name>;
+```
+
+**create table**
+
+```
 CREATE TABLE employees (
    ID INT PRIMARY KEY     NOT NULL,
    NAME           TEXT    NOT NULL,
@@ -24,9 +56,22 @@ CREATE TABLE employees (
    SALARY         REAL DEFAULT 25500.00,
    BDAY			  DATE DEFAULT '1900-01-01'
 );
-show tables in a database (list down)
+```
+
+**show tables in a database (list down)**
+
+```
 \d
-show details of a table
+```
+
+**show details of a table**
+
+```
 \d <table name>
-drop a table
+```
+
+**drop a table**
+
+```
 DROP TABLE <table name>;
+```
