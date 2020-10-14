@@ -108,3 +108,58 @@ INSERT INTO employees (ID,NAME,RANK,ADDRESS,SALARY,BDAY) VALUES (3, 'Maxwell', 6
 INSERT INTO employees (ID,NAME,RANK,ADDRESS,SALARY,BDAY) VALUES (4, 'Jasmine', 5, '983 Star Ave., Brooklyn, NY, 00912 ', 55700.00, '1997-12-13' ), (5, 'Orranda', 9, '745 Hammer Lane, Hammerfield, Texas, 75839', 65350.00 , '1992-12-13');
 ```
 
+
+**auto increment key field**
+
+```
+CREATE TABLE phonenumbers(
+	ID  SERIAL PRIMARY KEY,
+	PHONE           TEXT      NOT NULL
+);
+```
+```
+INSERT INTO phonenumbers (PHONE) VALUES ( '234-432-5234'), ('543-534-6543'), ('312-123-5432');
+```
+```
+\d phonenumbers
+```
+```
+SELECT * FROM phonenumbers;
+```
+
+**join queries**
+
+* Join queries allow us to select records from two or more tables.
+* A join query combines columns from one or more tables - it joins a bunch of columns from different tables together.
+
+**cross join**
+
+* A cross join returns the Cartesian product of rows from tables in the join. 
+* In other words, it will produce rows which combine each row from the first table with each row from the second table.
+
+```
+CREATE TABLE person (
+   ID  SERIAL PRIMARY KEY NOT NULL,
+   NAME           CHAR(50) NOT NULL
+);
+```
+
+```
+INSERT INTO person (NAME) VALUES ('Shen'), ('Daniel'), ('Juan'), ('Arin'), ('McLeod');
+```
+
+```
+CREATE TABLE sport (
+   ID  SERIAL PRIMARY KEY NOT NULL,
+   NAME           CHAR(50) NOT NULL,
+   P_ID         INT      references person(ID)
+);
+```
+
+```
+INSERT INTO sport (NAME, P_ID) VALUES ('Surf',1),('Soccer',3),('Ski',3),('Sail',3),('Bike',3);
+```
+
+```
+SELECT person.NAME, sport.NAME FROM person CROSS JOIN sport;
+```
