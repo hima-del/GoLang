@@ -195,3 +195,140 @@ SELECT person.NAME, sport.NAME FROM person RIGHT OUTER JOIN sport ON person.ID =
 ```
 SELECT person.NAME, sport.NAME FROM person FULL OUTER JOIN sport ON person.ID = sport.P_ID;
 ```
+
+**where**
+
+* Adding WHERE to a SQL query allows you to filter results.
+```
+SELECT * FROM employees WHERE salary > 60000;
+```
+
+**and**
+
+```
+SELECT * FROM employees WHERE salary > 60000 AND score = 26;
+```
+
+**in**
+
+```
+SELECT * FROM employees WHERE score IN (25,26);
+```
+
+**not**
+
+```
+SELECT * FROM employees WHERE score NOT IN (25,26);
+```
+
+**between**
+
+```
+SELECT * FROM employees WHERE score BETWEEN 23 AND 26;
+```
+
+**is not null**
+
+```
+SELECT * FROM employees WHERE score IS NOT NULL;
+```
+
+**like**
+
+```
+SELECT * FROM employees WHERE name LIKE '%an%';
+```
+
+**or**
+
+```
+SELECT * FROM employees WHERE score <= 24 OR salary < 50000;
+```
+
+**limit**
+
+* Limit the number of records returned
+
+```
+SELECT * FROM employees LIMIT 4;
+```
+```
+SELECT * FROM employees ORDER BY id LIMIT 4;
+```
+
+**update**
+
+```
+UPDATE table
+SET col1 = val1, col2 = val2, ..., colN = valN
+WHERE <condition>;
+```
+```
+SELECT * FROM employees;
+```
+```
+UPDATE employees SET score = 99 WHERE ID = 3;
+```
+
+**order by**
+
+```
+SELECT * FROM employees ORDER BY id;
+```
+
+**delete**
+
+```
+DELETE FROM table
+WHERE <condition>;
+```
+```
+SELECT * FROM sport;
+```
+```
+DELETE FROM sport WHERE id = 6;
+```
+
+**WARNING: this deletes all records:**
+```
+DELETE FROM sport;
+```
+
+**users & privileges**
+
+* see current user
+```
+SELECT current_user;
+```
+* details of users
+```
+\du
+```
+* create user
+```
+CREATE USER james WITH PASSWORD 'password';
+```
+* grant privileges
+* privileges: SELECT, INSERT, UPDATE, DELETE, RULE, ALL
+```
+GRANT ALL PRIVILEGES ON DATABASE company to james;
+```
+* revoke privileges
+
+```
+REVOKE ALL PRIVILEGES ON DATABASE company from james;
+```
+
+* alter
+
+```
+ALTER USER james WITH SUPERUSER;
+```
+```
+ALTER USER james WITH NOSUPERUSER;
+```
+
+* remove
+```
+DROP USER james;
+```
