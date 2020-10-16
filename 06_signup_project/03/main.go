@@ -67,3 +67,5 @@ func usersCreateProcess(w http.ResponseWriter, req *http.Request) {
 	//confirm insertion
 	tpl.ExecuteTemplate(w, "created.gohtml", u)
 }
+
+//http://localhost:8080/users/create/process?username=jose&password=pas
