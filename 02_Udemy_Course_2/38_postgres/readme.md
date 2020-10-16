@@ -332,3 +332,8 @@ ALTER USER james WITH NOSUPERUSER;
 ```
 DROP USER james;
 ```
+
+
+* Arguments to the SQL function are referenced in the function body using the syntax `$n`:
+* `$1` refers to the first argument, `$2` to the second, and so on.
+* If an argument is of a composite type, then the dot notation, e.g., `$1.name`, can be used to access attributes of the argument. 
