@@ -70,19 +70,22 @@ func booksIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func booksShow(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("booksshow")
 	if r.Method != "GET" {
 		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
 		return
 	}
 
 	isbn := r.FormValue("isbn")
+	fmt.Println("got isbn")
 	if isbn == "" {
+		fmt.Println("got error")
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
 		return
 	}
 
 	row := db.QueryRow("SELECT * FROM books WHERE isbn = $1", isbn)
-
+	fmt.Println("got row")
 	bk := Book{}
 	err := row.Scan(&bk.isbn, &bk.title, &bk.author, &bk.price)
 	switch {
