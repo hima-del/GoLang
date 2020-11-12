@@ -24,7 +24,7 @@ var books []Book
 
 //function to get all books
 
-func getBook(w http.Responsewriter, req *http.Request) {
+func getBook(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(books)
 }
@@ -32,5 +32,5 @@ func getBook(w http.Responsewriter, req *http.Request) {
 func main() {
 	//init router
 	r := mux.NewRouter()
-
+	r.HandleFunc("/getbook", getBook)
 }
