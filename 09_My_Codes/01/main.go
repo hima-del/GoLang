@@ -1,3 +1,4 @@
+//writing string to a file
 package main
 
 import (
