@@ -20,8 +20,8 @@ func main() {
 	go kickBall("bob")
 	go kickBall("emily")
 	ball <- "referee"
-	var c chan bool
-	<-c
+	//var c chan bool
+	//<-c
 	//fmt.Println("channel", d)
 	//time.Sleep(2 * time.Second)
 }
